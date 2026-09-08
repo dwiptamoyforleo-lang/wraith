@@ -6,16 +6,16 @@
 <title>WRAITH — Merch</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="blur-reveal.css">
-</style>
-<link rel="stylesheet" href="theme.css">
+<link rel="stylesheet" href="blur-reveal.css">
+<style>
   :root{
-    --bg: #0B0B0A;
-    --panel: #151210;
-    --ink: #EDE6DA;
-    --muted: #8A8172;
-    --accent: #7A1F1F;
-    --line: #2B2620;
+    --bg: #FBF8FC;
+    --panel: #F3ECF7;
+    --ink: #241C2C;
+    --muted: #756981;
+    --accent: #A3197B;
+    --on-accent: #FFFFFF;
+    --line: #E8DCEA;
   }
   *{ box-sizing: border-box; margin:0; padding:0; }
   html{ scroll-behavior: smooth; }
@@ -47,7 +47,7 @@
 
   .ticker{
     background: var(--accent);
-    color: var(--ink);
+    color: var(--on-accent);
     font-size: 12px;
     letter-spacing: 0.04em;
     padding: 7px 0;
@@ -131,14 +131,14 @@
     background: var(--ink);
     color: var(--bg);
   }
-  .btn-solid:hover{ background: var(--accent); border-color: var(--accent); color: var(--ink); }
+  .btn-solid:hover{ background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
   .btn-outline:hover{ border-color: var(--accent); color: var(--accent); }
 
   .hero-art{
     aspect-ratio: 4/5;
     background:
-      repeating-linear-gradient(135deg, transparent 0 18px, rgba(237,230,218,0.035) 18px 19px),
-      linear-gradient(160deg, #201A17, #0B0B0A 65%);
+      repeating-linear-gradient(135deg, transparent 0 18px, rgba(36,28,44,0.035) 18px 19px),
+      linear-gradient(160deg, #F2E1F0, #FBF8FC 65%);
     border: 1px solid var(--line);
     position: relative;
     clip-path: polygon(0 0, 100% 0, 100% 92%, 88% 100%, 0 100%);
@@ -191,7 +191,7 @@
   .card-art span.mark{
     font-family: 'Anton';
     font-size: 15vw;
-    color: rgba(237,230,218,0.06);
+    color: rgba(36,28,44,0.06);
     user-select: none;
   }
   .card-body{
@@ -217,12 +217,12 @@
   }
   .card-body .add:hover{ border-color: var(--accent); color: var(--accent); }
 
-  .c1 .card-art{ background: linear-gradient(155deg,#241A17,#0B0B0A 70%); }
-  .c2 .card-art{ background: linear-gradient(155deg,#1B1B18,#0B0B0A 70%); }
-  .c3 .card-art{ background: linear-gradient(155deg,#231414,#0B0B0A 70%); }
-  .c4 .card-art{ background: linear-gradient(155deg,#171713,#0B0B0A 70%); }
-  .c5 .card-art{ background: linear-gradient(155deg,#221816,#0B0B0A 70%); }
-  .c6 .card-art{ background: linear-gradient(155deg,#1A1815,#0B0B0A 70%); }
+  .c1 .card-art{ background: linear-gradient(155deg,#F6E1F0,#FBF8FC 70%); }
+  .c2 .card-art{ background: linear-gradient(155deg,#EFE3F6,#FBF8FC 70%); }
+  .c3 .card-art{ background: linear-gradient(155deg,#F8E0EA,#FBF8FC 70%); }
+  .c4 .card-art{ background: linear-gradient(155deg,#ECE4F7,#FBF8FC 70%); }
+  .c5 .card-art{ background: linear-gradient(155deg,#F5E2EF,#FBF8FC 70%); }
+  .c6 .card-art{ background: linear-gradient(155deg,#F0E1F4,#FBF8FC 70%); }
 
   .manifesto{
     display: grid;
@@ -276,7 +276,7 @@
     font-size: 14px;
     cursor: pointer;
   }
-  .news button:hover{ background: var(--accent); color: var(--ink); }
+  .news button:hover{ background: var(--accent); color: var(--on-accent); }
   .news .note{ font-size: 12px; color: var(--muted); margin-top: 10px; }
 
   footer{ padding: 44px 0; }
