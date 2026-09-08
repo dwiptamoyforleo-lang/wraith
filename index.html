@@ -9,13 +9,18 @@
 <link rel="stylesheet" href="blur-reveal.css">
 <style>
   :root{
-    --bg: #FDE6F0;
-    --panel: #FBD0E4;
+    --bg: #FAF8FB;
+    --bg-dark: #2A1730;
+    --bg-dark-2: #40234A;
     --ink: #241C2C;
-    --muted: #756981;
-    --accent: #A3197B;
+    --ink-dark: #F5EDEF;
+    --muted: #786C84;
+    --muted-dark: #C7AFD2;
+    --accent: #9B3FA0;
+    --gold: #DCA860;
     --on-accent: #FFFFFF;
-    --line: #F2C4DC;
+    --line: #E6DEEA;
+    --line-dark: #4E3158;
   }
   *{ box-sizing: border-box; margin:0; padding:0; }
   html{ scroll-behavior: smooth; }
@@ -45,6 +50,7 @@
   a{ color: inherit; text-decoration: none; }
   .wrap{ max-width: 1180px; margin: 0 auto; padding: 0 28px; }
 
+  /* ---- ticker ---- */
   .ticker{
     background: var(--accent);
     color: var(--on-accent);
@@ -64,34 +70,40 @@
     to{ transform: translateX(-50%); }
   }
 
+  /* ---- header ---- */
   header{
+    background: var(--bg-dark);
+    border-bottom: 1px solid var(--line-dark);
+  }
+  .header-bar{
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 22px 0;
-    border-bottom: 1px solid var(--line);
   }
-  .logo{ font-family: 'Anton'; font-size: 26px; letter-spacing: 0.02em; }
+  .logo{ font-family: 'Anton'; font-size: 26px; letter-spacing: 0.02em; color: var(--ink-dark); }
   nav ul{
     list-style: none;
     display: flex;
     gap: 32px;
     font-size: 14px;
   }
-  nav a{ color: var(--muted); transition: color .15s; }
-  nav a:hover{ color: var(--ink); }
+  nav a{ color: var(--muted-dark); transition: color .15s; }
+  nav a:hover{ color: var(--ink-dark); }
   .cart{
     font-size: 14px;
-    border: 1px solid var(--line);
+    color: var(--muted-dark);
+    border: 1px solid var(--line-dark);
     padding: 8px 16px;
   }
 
+  /* ---- hero ---- */
   .hero{
     position: relative;
     padding: 90px 0 70px;
-    border-bottom: 1px solid var(--line);
+    border-bottom: 1px solid var(--line-dark);
     overflow: hidden;
-    background: linear-gradient(120deg, #FDE6F0, #FAC1DE, #FDE6F0);
+    background: linear-gradient(120deg, var(--bg-dark), var(--bg-dark-2), var(--bg-dark));
     background-size: 200% 200%;
     animation: heroFlow 14s ease-in-out infinite;
   }
@@ -107,15 +119,15 @@
   }
   .hero h1{
     font-size: clamp(52px, 8vw, 108px);
-    color: var(--ink);
+    color: var(--ink-dark);
   }
   .hero h1 em{
     font-style: normal;
-    color: var(--accent);
+    color: var(--gold);
   }
   .hero p{
     max-width: 42ch;
-    color: var(--muted);
+    color: var(--muted-dark);
     margin-top: 22px;
     font-size: 16px;
   }
@@ -129,18 +141,20 @@
     padding: 14px 26px;
     font-size: 14px;
     font-weight: 600;
-    border: 1px solid var(--ink);
+    border: 1px solid var(--ink-dark);
   }
   .btn-solid{
-    background: var(--ink);
-    color: var(--bg);
+    background: var(--ink-dark);
+    color: var(--bg-dark);
   }
-  .btn-solid:hover{ background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
-  .btn-outline:hover{ border-color: var(--accent); color: var(--accent); }
+  .btn-solid:hover{ background: var(--gold); border-color: var(--gold); color: var(--bg-dark); }
+  .btn-outline{ color: var(--ink-dark); }
+  .btn-outline:hover{ border-color: var(--gold); color: var(--gold); }
 
   .hero-art{
     aspect-ratio: 4/5;
-    border: 1px solid var(--line);
+    background: linear-gradient(160deg, var(--bg-dark-2), var(--bg-dark) 65%);
+    border: 1px solid var(--line-dark);
     position: relative;
     clip-path: polygon(0 0, 100% 0, 100% 92%, 88% 100%, 0 100%);
     display: flex;
@@ -160,7 +174,7 @@
     position: relative;
     z-index: 1;
     font-size: 12px;
-    color: var(--on-accent);
+    color: #fff;
     text-shadow: 0 1px 6px rgba(0,0,0,0.5);
     border-top: 1px solid rgba(255,255,255,0.4);
     padding-top: 10px;
@@ -169,6 +183,7 @@
     justify-content: space-between;
   }
 
+  /* ---- section heading ---- */
   .section{ padding: 80px 0; border-bottom: 1px solid var(--line); }
   .section-head{
     display: flex;
@@ -177,9 +192,10 @@
     margin-bottom: 44px;
     gap: 20px;
   }
-  .section-head h2{ font-size: clamp(32px, 4.5vw, 48px); }
+  .section-head h2{ font-size: clamp(32px, 4.5vw, 48px); color: var(--ink); }
   .section-head p{ color: var(--muted); font-size: 14px; max-width: 30ch; }
 
+  /* ---- products ---- */
   .grid{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -189,16 +205,11 @@
   }
   .card{
     background: var(--bg);
-    padding: 0;
     display: flex;
     flex-direction: column;
   }
   .card-art{
     aspect-ratio: 1/1;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     overflow: hidden;
   }
   .card-art img{
@@ -217,11 +228,12 @@
     align-items: baseline;
     margin-bottom: 6px;
   }
-  .card-body h3{ font-family:'Work Sans'; font-weight: 600; font-size: 16px; text-transform: none; }
+  .card-body h3{ font-family:'Work Sans'; font-weight: 600; font-size: 16px; color: var(--ink); }
   .card-body .price{ font-size: 15px; color: var(--accent); font-weight: 600; }
   .card-body .desc{ font-size: 13px; color: var(--muted); margin-bottom: 14px; }
   .card-body .add{
     font-size: 13px;
+    color: var(--ink);
     border: 1px solid var(--line);
     padding: 10px 0;
     text-align: center;
@@ -230,6 +242,7 @@
   }
   .card-body .add:hover{ border-color: var(--accent); color: var(--accent); }
 
+  /* ---- about / manifesto ---- */
   .manifesto{
     display: grid;
     grid-template-columns: 0.9fr 1.1fr;
@@ -246,6 +259,8 @@
     max-width: 52ch;
   }
 
+  /* ---- newsletter ---- */
+  #news{ background: var(--bg-dark); border-bottom: none; }
   .news{
     display: flex;
     justify-content: space-between;
@@ -253,11 +268,10 @@
     flex-wrap: wrap;
     gap: 24px;
   }
-  .news h2{ font-size: clamp(30px, 4vw, 44px); max-width: 14ch; }
+  .news h2{ font-size: clamp(30px, 4vw, 44px); max-width: 14ch; color: var(--ink-dark); }
   .news form{
     display: flex;
-    gap: 0;
-    border: 1px solid var(--line);
+    border: 1px solid var(--line-dark);
     max-width: 420px;
     width: 100%;
   }
@@ -266,15 +280,15 @@
     background: transparent;
     border: none;
     outline: none;
-    color: var(--ink);
+    color: var(--ink-dark);
     padding: 14px 16px;
     font-family: inherit;
     font-size: 14px;
   }
-  .news input::placeholder{ color: var(--muted); }
+  .news input::placeholder{ color: var(--muted-dark); }
   .news button{
-    background: var(--ink);
-    color: var(--bg);
+    background: var(--gold);
+    color: var(--bg-dark);
     border: none;
     padding: 0 22px;
     font-family: inherit;
@@ -283,9 +297,10 @@
     cursor: pointer;
   }
   .news button:hover{ background: var(--accent); color: var(--on-accent); }
-  .news .note{ font-size: 12px; color: var(--muted); margin-top: 10px; }
+  .news .note{ font-size: 12px; color: var(--muted-dark); margin-top: 10px; }
 
-  footer{ padding: 44px 0; }
+  /* ---- footer ---- */
+  footer{ background: var(--bg-dark); padding: 44px 0; }
   .foot-grid{
     display: flex;
     justify-content: space-between;
@@ -293,10 +308,10 @@
     flex-wrap: wrap;
     gap: 20px;
     font-size: 13px;
-    color: var(--muted);
+    color: var(--muted-dark);
   }
   .foot-links{ display: flex; gap: 24px; }
-  .foot-links a:hover{ color: var(--ink); }
+  .foot-links a:hover{ color: var(--ink-dark); }
 
   @media (max-width: 860px){
     .hero-grid{ grid-template-columns: 1fr; }
@@ -322,8 +337,8 @@
     <span>FREE SHIPPING OVER $75 &nbsp;—&nbsp; NEW DROP: CH.03 NOW LIVE &nbsp;—&nbsp; RESTOCKS DON'T LAST &nbsp;—&nbsp; FREE SHIPPING OVER $75 &nbsp;—&nbsp; NEW DROP: CH.03 NOW LIVE &nbsp;—&nbsp; RESTOCKS DON'T LAST &nbsp;—&nbsp;</span>
   </div>
 
-  <div class="wrap">
-    <header>
+  <header>
+    <div class="wrap header-bar">
       <a href="#" class="logo">WRAITH</a>
       <nav>
         <ul>
@@ -333,9 +348,11 @@
         </ul>
       </nav>
       <a href="#shop" class="cart">Bag (0)</a>
-    </header>
+    </div>
+  </header>
 
-    <section class="hero">
+  <section class="hero">
+    <div class="wrap">
       <div class="hero-grid">
         <div>
           <h1>Made for<br>what's left<br><em>after dark.</em></h1>
@@ -350,16 +367,18 @@
           <div class="tag"><span>CH.03 — HOLLOW</span><span>Est. 2023</span></div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="section" id="shop">
+  <section class="section" id="shop">
+    <div class="wrap">
       <div class="section-head">
         <h2>Chapter 03: Hollow</h2>
         <p>Six pieces. Washed cotton, oxblood hardware, limited run.</p>
       </div>
       <div class="grid">
 
-        <div class="card c1">
+        <div class="card">
           <div class="card-art"><img src="https://picsum.photos/seed/ashhoodie/600/600" alt="Ash Hoodie"></div>
           <div class="card-body">
             <div class="row"><h3>Ash Hoodie</h3><span class="price">$68</span></div>
@@ -368,7 +387,7 @@
           </div>
         </div>
 
-        <div class="card c2">
+        <div class="card">
           <div class="card-art"><img src="https://picsum.photos/seed/splittee/600/600" alt="Split Tee"></div>
           <div class="card-body">
             <div class="row"><h3>Split Tee</h3><span class="price">$34</span></div>
@@ -377,7 +396,7 @@
           </div>
         </div>
 
-        <div class="card c3">
+        <div class="card">
           <div class="card-art"><img src="https://picsum.photos/seed/runecap/600/600" alt="Rune Cap"></div>
           <div class="card-body">
             <div class="row"><h3>Rune Cap</h3><span class="price">$28</span></div>
@@ -386,7 +405,7 @@
           </div>
         </div>
 
-        <div class="card c4">
+        <div class="card">
           <div class="card-art"><img src="https://picsum.photos/seed/cargopant/600/600" alt="Cargo Pant"></div>
           <div class="card-body">
             <div class="row"><h3>Cargo Pant</h3><span class="price">$82</span></div>
@@ -395,7 +414,7 @@
           </div>
         </div>
 
-        <div class="card c5">
+        <div class="card">
           <div class="card-art"><img src="https://picsum.photos/seed/bonetote/600/600" alt="Bone Tote"></div>
           <div class="card-body">
             <div class="row"><h3>Bone Tote</h3><span class="price">$22</span></div>
@@ -404,7 +423,7 @@
           </div>
         </div>
 
-        <div class="card c6">
+        <div class="card">
           <div class="card-art"><img src="https://picsum.photos/seed/vigiljacket/600/600" alt="Vigil Jacket"></div>
           <div class="card-body">
             <div class="row"><h3>Vigil Jacket</h3><span class="price">$124</span></div>
@@ -414,9 +433,11 @@
         </div>
 
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="section" id="about">
+  <section class="section" id="about">
+    <div class="wrap">
       <div class="manifesto">
         <p class="big">We don't design for a season. We design for the hours nobody's watching.</p>
         <div class="col">
@@ -425,9 +446,11 @@
           <p>No influencer boxes. No filler drops. Just pieces built to outlast the trend they arrived in.</p>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="section" id="news" style="border-bottom:none;">
+  <section class="section" id="news">
+    <div class="wrap">
       <div class="news">
         <h2>Know before the drop sells out.</h2>
         <div>
@@ -438,9 +461,11 @@
           <p class="note">One email per drop. Unsubscribe whenever.</p>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <footer>
+  <footer>
+    <div class="wrap">
       <div class="foot-grid">
         <span>© 2026 WRAITH. All rights reserved.</span>
         <div class="foot-links">
@@ -450,8 +475,8 @@
           <a href="#">Instagram</a>
         </div>
       </div>
-    </footer>
-  </div>
+    </div>
+  </footer>
 
   <script src="blur-reveal.js"></script>
 </body>
