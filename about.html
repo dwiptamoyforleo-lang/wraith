@@ -8,18 +8,19 @@
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg: #FDE6F0;
-    --ink: #241C2C;
-    --muted: #756981;
-    --accent: #A3197B;
-    --line: #F2C4DC;
+    --bg-dark: #2A1730;
+    --bg-dark-2: #40234A;
+    --ink-dark: #F5EDEF;
+    --muted-dark: #C7AFD2;
+    --gold: #DCA860;
+    --line-dark: #4E3158;
   }
   *{ box-sizing: border-box; margin:0; padding:0; }
   body{
-    background: linear-gradient(120deg, #FDE6F0, #FAC1DE, #FDE6F0);
+    background: linear-gradient(120deg, var(--bg-dark), var(--bg-dark-2), var(--bg-dark));
     background-size: 200% 200%;
     animation: heroFlow 14s ease-in-out infinite;
-    color: var(--ink);
+    color: var(--ink-dark);
     font-family: 'Work Sans', sans-serif;
     min-height: 100vh;
     display: flex;
@@ -39,17 +40,17 @@
     align-items: center;
     justify-content: space-between;
     padding: 22px 0;
-    border-bottom: 1px solid var(--line);
+    border-bottom: 1px solid var(--line-dark);
   }
   .logo{ font-family: 'Anton'; font-size: 26px; letter-spacing: 0.02em; }
   .back{
     font-size: 14px;
-    color: var(--muted);
-    border: 1px solid var(--line);
+    color: var(--muted-dark);
+    border: 1px solid var(--line-dark);
     padding: 8px 16px;
     transition: color .15s, border-color .15s;
   }
-  .back:hover{ color: var(--accent); border-color: var(--accent); }
+  .back:hover{ color: var(--gold); border-color: var(--gold); }
   main{
     flex: 1;
     display: flex;
@@ -63,17 +64,18 @@
     font-weight: 400;
     font-size: clamp(48px, 9vw, 96px);
     line-height: 0.95;
+    color: var(--gold);
   }
   main p{
-    color: var(--muted);
+    color: var(--muted-dark);
     font-size: 15px;
     margin-top: 18px;
   }
   footer{
     padding: 30px 0;
-    border-top: 1px solid var(--line);
+    border-top: 1px solid var(--line-dark);
     font-size: 13px;
-    color: var(--muted);
+    color: var(--muted-dark);
     text-align: center;
   }
 </style>
