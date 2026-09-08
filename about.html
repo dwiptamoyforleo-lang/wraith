@@ -8,11 +8,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg: #0B0B0A;
-    --ink: #EDE6DA;
-    --muted: #8A8172;
-    --accent: #7A1F1F;
-    --line: #2B2620;
+    --bg: #FBF8FC;
+    --ink: #241C2C;
+    --muted: #756981;
+    --accent: #A3197B;
+    --line: #E8DCEA;
   }
   *{ box-sizing: border-box; margin:0; padding:0; }
   body{
@@ -35,6 +35,62 @@
   .logo{ font-family: 'Anton'; font-size: 26px; letter-spacing: 0.02em; }
   .back{
     font-size: 14px;
+    color: var(--muted);
+    border: 1px solid var(--line);
+    padding: 8px 16px;
+    transition: color .15s, border-color .15s;
+  }
+  .back:hover{ color: var(--accent); border-color: var(--accent); }
+  main{
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 80px 28px;
+  }
+  main h1{
+    font-family: 'Anton', sans-serif;
+    font-weight: 400;
+    font-size: clamp(48px, 9vw, 96px);
+    line-height: 0.95;
+  }
+  main p{
+    color: var(--muted);
+    font-size: 15px;
+    margin-top: 18px;
+  }
+  footer{
+    padding: 30px 0;
+    border-top: 1px solid var(--line);
+    font-size: 13px;
+    color: var(--muted);
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+  <div class="wrap">
+    <header>
+      <a href="index.html" class="logo">WRAITH</a>
+      <a href="index.html" class="back">Back to shop</a>
+    </header>
+  </div>
+
+  <main>
+    <div>
+      <h1>Coming soon...</h1>
+      <p>Our story is still being written.</p>
+    </div>
+  </main>
+
+  <div class="wrap">
+    <footer>© 2026 WRAITH. All rights reserved.</footer>
+  </div>
+
+</body>
+</html>    font-size: 14px;
     color: var(--muted);
     border: 1px solid var(--line);
     padding: 8px 16px;
