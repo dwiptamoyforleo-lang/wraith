@@ -7,7 +7,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="blur-reveal.css">
-
 <style>
   :root{
     --bg: #FDE6F0;
@@ -18,17 +17,8 @@
     --on-accent: #FFFFFF;
     --line: #F2C4DC;
   }
-
-  *{
-    box-sizing: border-box;
-    margin:0;
-    padding:0;
-  }
-
-  html{
-    scroll-behavior: smooth;
-  }
-
+  *{ box-sizing: border-box; margin:0; padding:0; }
+  html{ scroll-behavior: smooth; }
   body{
     background: var(--bg);
     color: var(--ink);
@@ -36,7 +26,6 @@
     line-height: 1.5;
     position: relative;
   }
-
   body::before{
     content:"";
     position: fixed;
@@ -46,25 +35,15 @@
     opacity: 0.05;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
-
-  h1,h2,h3,.display{
+  h1,h2,h3, .display{
     font-family: 'Anton', sans-serif;
     font-weight: 400;
     letter-spacing: 0.01em;
     line-height: 0.95;
     text-transform: none;
   }
-
-  a{
-    color: inherit;
-    text-decoration: none;
-  }
-
-  .wrap{
-    max-width: 1180px;
-    margin: 0 auto;
-    padding: 0 28px;
-  }
+  a{ color: inherit; text-decoration: none; }
+  .wrap{ max-width: 1180px; margin: 0 auto; padding: 0 28px; }
 
   .ticker{
     background: var(--accent);
@@ -75,21 +54,14 @@
     overflow: hidden;
     white-space: nowrap;
   }
-
   .ticker span{
     display: inline-block;
     padding-right: 60px;
     animation: scroll 22s linear infinite;
   }
-
   @keyframes scroll{
-    from{
-      transform: translateX(0);
-    }
-
-    to{
-      transform: translateX(-50%);
-    }
+    from{ transform: translateX(0); }
+    to{ transform: translateX(-50%); }
   }
 
   header{
@@ -99,29 +71,15 @@
     padding: 22px 0;
     border-bottom: 1px solid var(--line);
   }
-
-  .logo{
-    font-family: 'Anton';
-    font-size: 26px;
-    letter-spacing: 0.02em;
-  }
-
+  .logo{ font-family: 'Anton'; font-size: 26px; letter-spacing: 0.02em; }
   nav ul{
     list-style: none;
     display: flex;
     gap: 32px;
     font-size: 14px;
   }
-
-  nav a{
-    color: var(--muted);
-    transition: color .15s;
-  }
-
-  nav a:hover{
-    color: var(--ink);
-  }
-
+  nav a{ color: var(--muted); transition: color .15s; }
+  nav a:hover{ color: var(--ink); }
   .cart{
     font-size: 14px;
     border: 1px solid var(--line);
@@ -133,56 +91,39 @@
     padding: 90px 0 70px;
     border-bottom: 1px solid var(--line);
     overflow: hidden;
-    background: linear-gradient(
-      120deg,
-      #FDE6F0,
-      #FAC1DE,
-      #FDE6F0
-    );
+    background: linear-gradient(120deg, #FDE6F0, #FAC1DE, #FDE6F0);
     background-size: 200% 200%;
     animation: heroFlow 14s ease-in-out infinite;
   }
-
   @keyframes heroFlow{
-    0%, 100%{
-      background-position: 0% 50%;
-    }
-
-    50%{
-      background-position: 100% 50%;
-    }
+    0%, 100%{ background-position: 0% 50%; }
+    50%{ background-position: 100% 50%; }
   }
-
   .hero-grid{
     display: grid;
     grid-template-columns: 1.15fr 0.85fr;
     gap: 50px;
     align-items: center;
   }
-
   .hero h1{
     font-size: clamp(52px, 8vw, 108px);
     color: var(--ink);
   }
-
   .hero h1 em{
     font-style: normal;
     color: var(--accent);
   }
-
   .hero p{
     max-width: 42ch;
     color: var(--muted);
     margin-top: 22px;
     font-size: 16px;
   }
-
   .hero-actions{
     margin-top: 34px;
     display: flex;
     gap: 16px;
   }
-
   .btn{
     display: inline-block;
     padding: 14px 26px;
@@ -190,65 +131,45 @@
     font-weight: 600;
     border: 1px solid var(--ink);
   }
-
   .btn-solid{
     background: var(--ink);
     color: var(--bg);
   }
-
-  .btn-solid:hover{
-    background: var(--accent);
-    border-color: var(--accent);
-    color: var(--on-accent);
-  }
-
-  .btn-outline:hover{
-    border-color: var(--accent);
-    color: var(--accent);
-  }
+  .btn-solid:hover{ background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+  .btn-outline:hover{ border-color: var(--accent); color: var(--accent); }
 
   .hero-art{
     aspect-ratio: 4/5;
-    background:
-      repeating-linear-gradient(
-        135deg,
-        transparent 0 18px,
-        rgba(36,28,44,0.035) 18px 19px
-      ),
-      linear-gradient(
-        160deg,
-        #F4C9E4,
-        #FDE6F0 65%
-      );
     border: 1px solid var(--line);
     position: relative;
-    clip-path: polygon(
-      0 0,
-      100% 0,
-      100% 92%,
-      88% 100%,
-      0 100%
-    );
+    clip-path: polygon(0 0, 100% 0, 100% 92%, 88% 100%, 0 100%);
     display: flex;
     align-items: flex-end;
     padding: 24px;
+    overflow: hidden;
   }
-
+  .hero-art img{
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+  }
   .hero-art .tag{
+    position: relative;
+    z-index: 1;
     font-size: 12px;
-    color: var(--muted);
-    border-top: 1px solid var(--line);
+    color: var(--on-accent);
+    text-shadow: 0 1px 6px rgba(0,0,0,0.5);
+    border-top: 1px solid rgba(255,255,255,0.4);
     padding-top: 10px;
     width: 100%;
     display: flex;
     justify-content: space-between;
   }
 
-  .section{
-    padding: 80px 0;
-    border-bottom: 1px solid var(--line);
-  }
-
+  .section{ padding: 80px 0; border-bottom: 1px solid var(--line); }
   .section-head{
     display: flex;
     justify-content: space-between;
@@ -256,16 +177,8 @@
     margin-bottom: 44px;
     gap: 20px;
   }
-
-  .section-head h2{
-    font-size: clamp(32px, 4.5vw, 48px);
-  }
-
-  .section-head p{
-    color: var(--muted);
-    font-size: 14px;
-    max-width: 30ch;
-  }
+  .section-head h2{ font-size: clamp(32px, 4.5vw, 48px); }
+  .section-head p{ color: var(--muted); font-size: 14px; max-width: 30ch; }
 
   .grid{
     display: grid;
@@ -274,14 +187,12 @@
     background: var(--line);
     border: 1px solid var(--line);
   }
-
   .card{
     background: var(--bg);
     padding: 0;
     display: flex;
     flex-direction: column;
   }
-
   .card-art{
     aspect-ratio: 1/1;
     position: relative;
@@ -290,45 +201,25 @@
     justify-content: center;
     overflow: hidden;
   }
-
-  .card-art span.mark{
-    font-family: 'Anton';
-    font-size: 15vw;
-    color: rgba(36,28,44,0.06);
-    user-select: none;
+  .card-art img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
   }
-
   .card-body{
     padding: 20px 22px 26px;
     border-top: 1px solid var(--line);
   }
-
   .card-body .row{
     display: flex;
     justify-content: space-between;
     align-items: baseline;
     margin-bottom: 6px;
   }
-
-  .card-body h3{
-    font-family:'Work Sans';
-    font-weight: 600;
-    font-size: 16px;
-    text-transform: none;
-  }
-
-  .card-body .price{
-    font-size: 15px;
-    color: var(--accent);
-    font-weight: 600;
-  }
-
-  .card-body .desc{
-    font-size: 13px;
-    color: var(--muted);
-    margin-bottom: 14px;
-  }
-
+  .card-body h3{ font-family:'Work Sans'; font-weight: 600; font-size: 16px; text-transform: none; }
+  .card-body .price{ font-size: 15px; color: var(--accent); font-weight: 600; }
+  .card-body .desc{ font-size: 13px; color: var(--muted); margin-bottom: 14px; }
   .card-body .add{
     font-size: 13px;
     border: 1px solid var(--line);
@@ -337,47 +228,17 @@
     display: block;
     transition: border-color .15s, color .15s;
   }
-
-  .card-body .add:hover{
-    border-color: var(--accent);
-    color: var(--accent);
-  }
-
-  .c1 .card-art{
-    background: linear-gradient(155deg,#F8C7E3,#FDE6F0 70%);
-  }
-
-  .c2 .card-art{
-    background: linear-gradient(155deg,#F0C2E8,#FDE6F0 70%);
-  }
-
-  .c3 .card-art{
-    background: linear-gradient(155deg,#FAC3D6,#FDE6F0 70%);
-  }
-
-  .c4 .card-art{
-    background: linear-gradient(155deg,#E9C2EC,#FDE6F0 70%);
-  }
-
-  .c5 .card-art{
-    background: linear-gradient(155deg,#F6C4DC,#FDE6F0 70%);
-  }
-
-  .c6 .card-art{
-    background: linear-gradient(155deg,#F0C2E4,#FDE6F0 70%);
-  }
+  .card-body .add:hover{ border-color: var(--accent); color: var(--accent); }
 
   .manifesto{
     display: grid;
     grid-template-columns: 0.9fr 1.1fr;
     gap: 60px;
   }
-
   .manifesto .big{
     font-size: clamp(26px, 3.4vw, 34px);
     color: var(--ink);
   }
-
   .manifesto .col p{
     color: var(--muted);
     font-size: 15px;
@@ -392,12 +253,7 @@
     flex-wrap: wrap;
     gap: 24px;
   }
-
-  .news h2{
-    font-size: clamp(30px, 4vw, 44px);
-    max-width: 14ch;
-  }
-
+  .news h2{ font-size: clamp(30px, 4vw, 44px); max-width: 14ch; }
   .news form{
     display: flex;
     gap: 0;
@@ -405,7 +261,6 @@
     max-width: 420px;
     width: 100%;
   }
-
   .news input{
     flex: 1;
     background: transparent;
@@ -416,11 +271,7 @@
     font-family: inherit;
     font-size: 14px;
   }
-
-  .news input::placeholder{
-    color: var(--muted);
-  }
-
+  .news input::placeholder{ color: var(--muted); }
   .news button{
     background: var(--ink);
     color: var(--bg);
@@ -431,22 +282,10 @@
     font-size: 14px;
     cursor: pointer;
   }
+  .news button:hover{ background: var(--accent); color: var(--on-accent); }
+  .news .note{ font-size: 12px; color: var(--muted); margin-top: 10px; }
 
-  .news button:hover{
-    background: var(--accent);
-    color: var(--on-accent);
-  }
-
-  .news .note{
-    font-size: 12px;
-    color: var(--muted);
-    margin-top: 10px;
-  }
-
-  footer{
-    padding: 44px 0;
-  }
-
+  footer{ padding: 44px 0; }
   .foot-grid{
     display: flex;
     justify-content: space-between;
@@ -456,81 +295,36 @@
     font-size: 13px;
     color: var(--muted);
   }
-
-  .foot-links{
-    display: flex;
-    gap: 24px;
-  }
-
-  .foot-links a:hover{
-    color: var(--ink);
-  }
+  .foot-links{ display: flex; gap: 24px; }
+  .foot-links a:hover{ color: var(--ink); }
 
   @media (max-width: 860px){
-    .hero-grid{
-      grid-template-columns: 1fr;
-    }
-
-    .grid{
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    .manifesto{
-      grid-template-columns: 1fr;
-    }
-
-    nav{
-      display: none;
-    }
-
-    .section-head{
-      flex-direction: column;
-      align-items: flex-start;
-    }
+    .hero-grid{ grid-template-columns: 1fr; }
+    .grid{ grid-template-columns: repeat(2, 1fr); }
+    .manifesto{ grid-template-columns: 1fr; }
+    nav{ display: none; }
+    .section-head{ flex-direction: column; align-items: flex-start; }
   }
-
   @media (max-width: 520px){
-    .grid{
-      grid-template-columns: 1fr;
-    }
+    .grid{ grid-template-columns: 1fr; }
   }
-
   @media (prefers-reduced-motion: reduce){
-    .ticker span{
-      animation: none;
-    }
-
-    .hero{
-      animation: none;
-      background-position: 50% 50%;
-    }
+    .ticker span{ animation: none; }
+    .hero{ animation: none; background-position: 50% 50%; }
   }
 
-  :focus-visible{
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
+  :focus-visible{ outline: 2px solid var(--accent); outline-offset: 2px; }
 </style>
 </head>
-
 <body>
 
   <div class="ticker" aria-hidden="true">
-    <span>
-      FREE SHIPPING OVER $75 &nbsp;—&nbsp;
-      NEW DROP: CH.03 NOW LIVE &nbsp;—&nbsp;
-      RESTOCKS DON'T LAST &nbsp;—&nbsp;
-      FREE SHIPPING OVER $75 &nbsp;—&nbsp;
-      NEW DROP: CH.03 NOW LIVE &nbsp;—&nbsp;
-      RESTOCKS DON'T LAST &nbsp;—&nbsp;
-    </span>
+    <span>FREE SHIPPING OVER $75 &nbsp;—&nbsp; NEW DROP: CH.03 NOW LIVE &nbsp;—&nbsp; RESTOCKS DON'T LAST &nbsp;—&nbsp; FREE SHIPPING OVER $75 &nbsp;—&nbsp; NEW DROP: CH.03 NOW LIVE &nbsp;—&nbsp; RESTOCKS DON'T LAST &nbsp;—&nbsp;</span>
   </div>
 
   <div class="wrap">
-
     <header>
       <a href="#" class="logo">WRAITH</a>
-
       <nav>
         <ul>
           <li><a href="#shop">Shop</a></li>
@@ -538,266 +332,127 @@
           <li><a href="#news">Notify</a></li>
         </ul>
       </nav>
-
       <a href="#shop" class="cart">Bag (0)</a>
     </header>
 
     <section class="hero">
-
       <div class="hero-grid">
-
         <div>
-          <h1>
-            Made for<br>
-            what's left<br>
-            <em>after dark.</em>
-          </h1>
-
-          <p>
-            Small-batch clothing built from worn-in fabric and quiet menace.
-            No seasons, no restocks promised — just chapters.
-          </p>
-
+          <h1>Made for<br>what's left<br><em>after dark.</em></h1>
+          <p>Small-batch clothing built from worn-in fabric and quiet menace. No seasons, no restocks promised — just chapters.</p>
           <div class="hero-actions">
-            <a href="#shop" class="btn btn-solid">
-              Shop Chapter 03
-            </a>
-
-            <a href="about.html" class="btn btn-outline">
-              Our story
-            </a>
+            <a href="#shop" class="btn btn-solid">Shop Chapter 03</a>
+            <a href="about.html" class="btn btn-outline">Our story</a>
           </div>
         </div>
-
         <div class="hero-art">
-          <div class="tag">
-            <span>CH.03 — HOLLOW</span>
-            <span>Est. 2023</span>
-          </div>
+          <img src="https://picsum.photos/seed/wraithhero/700/900" alt="">
+          <div class="tag"><span>CH.03 — HOLLOW</span><span>Est. 2023</span></div>
         </div>
-
       </div>
-
     </section>
 
     <section class="section" id="shop">
-
       <div class="section-head">
         <h2>Chapter 03: Hollow</h2>
-
-        <p>
-          Six pieces. Washed cotton, oxblood hardware, limited run.
-        </p>
+        <p>Six pieces. Washed cotton, oxblood hardware, limited run.</p>
       </div>
-
       <div class="grid">
 
         <div class="card c1">
-          <div class="card-art">
-            <span class="mark">01</span>
-          </div>
-
+          <div class="card-art"><img src="https://picsum.photos/seed/ashhoodie/600/600" alt="Ash Hoodie"></div>
           <div class="card-body">
-            <div class="row">
-              <h3>Ash Hoodie</h3>
-              <span class="price">$68</span>
-            </div>
-
-            <p class="desc">
-              Heavyweight fleece, garment-dyed, dropped shoulder.
-            </p>
-
+            <div class="row"><h3>Ash Hoodie</h3><span class="price">$68</span></div>
+            <p class="desc">Heavyweight fleece, garment-dyed, dropped shoulder.</p>
             <a href="#" class="add">Add to bag</a>
           </div>
         </div>
 
         <div class="card c2">
-          <div class="card-art">
-            <span class="mark">02</span>
-          </div>
-
+          <div class="card-art"><img src="https://picsum.photos/seed/splittee/600/600" alt="Split Tee"></div>
           <div class="card-body">
-            <div class="row">
-              <h3>Split Tee</h3>
-              <span class="price">$34</span>
-            </div>
-
-            <p class="desc">
-              Boxy fit, raw hem, printed back graphic.
-            </p>
-
+            <div class="row"><h3>Split Tee</h3><span class="price">$34</span></div>
+            <p class="desc">Boxy fit, raw hem, printed back graphic.</p>
             <a href="#" class="add">Add to bag</a>
           </div>
         </div>
 
         <div class="card c3">
-          <div class="card-art">
-            <span class="mark">03</span>
-          </div>
-
+          <div class="card-art"><img src="https://picsum.photos/seed/runecap/600/600" alt="Rune Cap"></div>
           <div class="card-body">
-            <div class="row">
-              <h3>Rune Cap</h3>
-              <span class="price">$28</span>
-            </div>
-
-            <p class="desc">
-              Unstructured six-panel, embroidered mark.
-            </p>
-
+            <div class="row"><h3>Rune Cap</h3><span class="price">$28</span></div>
+            <p class="desc">Unstructured six-panel, embroidered mark.</p>
             <a href="#" class="add">Add to bag</a>
           </div>
         </div>
 
         <div class="card c4">
-          <div class="card-art">
-            <span class="mark">04</span>
-          </div>
-
+          <div class="card-art"><img src="https://picsum.photos/seed/cargopant/600/600" alt="Cargo Pant"></div>
           <div class="card-body">
-            <div class="row">
-              <h3>Cargo Pant</h3>
-              <span class="price">$82</span>
-            </div>
-
-            <p class="desc">
-              Ripstop nylon, tapered leg, triple stitch.
-            </p>
-
+            <div class="row"><h3>Cargo Pant</h3><span class="price">$82</span></div>
+            <p class="desc">Ripstop nylon, tapered leg, triple stitch.</p>
             <a href="#" class="add">Add to bag</a>
           </div>
         </div>
 
         <div class="card c5">
-          <div class="card-art">
-            <span class="mark">05</span>
-          </div>
-
+          <div class="card-art"><img src="https://picsum.photos/seed/bonetote/600/600" alt="Bone Tote"></div>
           <div class="card-body">
-            <div class="row">
-              <h3>Bone Tote</h3>
-              <span class="price">$22</span>
-            </div>
-
-            <p class="desc">
-              Waxed canvas, reinforced base, one size.
-            </p>
-
+            <div class="row"><h3>Bone Tote</h3><span class="price">$22</span></div>
+            <p class="desc">Waxed canvas, reinforced base, one size.</p>
             <a href="#" class="add">Add to bag</a>
           </div>
         </div>
 
         <div class="card c6">
-          <div class="card-art">
-            <span class="mark">06</span>
-          </div>
-
+          <div class="card-art"><img src="https://picsum.photos/seed/vigiljacket/600/600" alt="Vigil Jacket"></div>
           <div class="card-body">
-            <div class="row">
-              <h3>Vigil Jacket</h3>
-              <span class="price">$124</span>
-            </div>
-
-            <p class="desc">
-              Coach shell, quilted lining, snap front.
-            </p>
-
+            <div class="row"><h3>Vigil Jacket</h3><span class="price">$124</span></div>
+            <p class="desc">Coach shell, quilted lining, snap front.</p>
             <a href="#" class="add">Add to bag</a>
           </div>
         </div>
 
       </div>
-
     </section>
 
     <section class="section" id="about">
-
       <div class="manifesto">
-
-        <p class="big">
-          We don't design for a season. We design for the hours nobody's watching.
-        </p>
-
+        <p class="big">We don't design for a season. We design for the hours nobody's watching.</p>
         <div class="col">
-
-          <p>
-            WRAITH started in a garage with one screen printer and a rule:
-            nothing goes out that we wouldn't wear until it falls apart.
-            That rule hasn't changed.
-          </p>
-
-          <p>
-            Every chapter is a small, deliberate run — cut, dyed, and printed
-            in batches too small to reorder. When it's gone, it becomes the last one.
-          </p>
-
-          <p>
-            No influencer boxes. No filler drops. Just pieces built to outlast
-            the trend they arrived in.
-          </p>
-
+          <p>WRAITH started in a garage with one screen printer and a rule: nothing goes out that we wouldn't wear until it falls apart. That rule hasn't changed.</p>
+          <p>Every chapter is a small, deliberate run — cut, dyed, and printed in batches too small to reorder. When it's gone, it becomes the last one.</p>
+          <p>No influencer boxes. No filler drops. Just pieces built to outlast the trend they arrived in.</p>
         </div>
-
       </div>
-
     </section>
 
     <section class="section" id="news" style="border-bottom:none;">
-
       <div class="news">
-
-        <h2>
-          Know before the drop sells out.
-        </h2>
-
+        <h2>Know before the drop sells out.</h2>
         <div>
-
           <form onsubmit="event.preventDefault(); this.querySelector('button').textContent='You\'re in';">
-
-            <input
-              type="email"
-              placeholder="your@email.com"
-              required
-            >
-
-            <button type="submit">
-              Notify me
-            </button>
-
+            <input type="email" placeholder="your@email.com" required>
+            <button type="submit">Notify me</button>
           </form>
-
-          <p class="note">
-            One email per drop. Unsubscribe whenever.
-          </p>
-
+          <p class="note">One email per drop. Unsubscribe whenever.</p>
         </div>
-
       </div>
-
     </section>
 
     <footer>
-
       <div class="foot-grid">
-
-        <span>
-          © 2026 WRAITH. All rights reserved.
-        </span>
-
+        <span>© 2026 WRAITH. All rights reserved.</span>
         <div class="foot-links">
           <a href="#">Shipping</a>
           <a href="#">Returns</a>
           <a href="#">Contact</a>
           <a href="#">Instagram</a>
         </div>
-
       </div>
-
     </footer>
-
   </div>
 
   <script src="blur-reveal.js"></script>
-
 </body>
 </html>
