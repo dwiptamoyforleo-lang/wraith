@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign In — WRAITH</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<style>
+  :root{
+    --bg-dark: #2A1730;
+    --bg-dark-2: #40234A;
+    --ink-dark: #F5EDEF;
+    --muted-dark: #C7AFD2;
+    --accent: #9B3FA0;
+    --gold: #DCA860;
+    --line-dark: #4E3158;
+  }
+  *{ box-sizing: border-box; margin:0; padding:0; }
+  body{
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    font-family: 'Work Sans', sans-serif;
+    color: var(--ink-dark);
+    background: linear-gradient(160deg, var(--bg-dark), var(--bg-dark-2));
+    position: relative;
+    overflow: hidden;
+  }
+  h1,.display{
+    font-family: 'Anton', sans-serif;
+    font-weight: 400;
+    line-height: 0.95;
+  }
+
+  /* ---- animated background blobs ---- */
+  .blob{
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0.55;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .blob-a{
+    width: 520px; height: 520px;
+    background: radial-gradient(circle, var(--gold), transparent 70%);
+    top: -140px; left: -120px;
+    animation: floatA 16s ease-in-out infinite alternate;
+  }
+  .blob-b{
+    width: 620px; height: 620px;
+    background: radial-gradient(circle, var(--accent), transparent 70%);
+    bottom: -180px; right: -160px;
+    animation: floatB 20s ease-in-out infinite alternate;
+  }
+  .blob-c{
+    width: 420px; height: 420px;
+    background: radial-gradient(circle, #6E2E86, transparent 70%);
+    top: 38%; left: 58%;
+    animation: floatC 24s ease-in-out infinite alternate;
+  }
+  @keyframes floatA{
+    0%{ transform: translate(0,0) scale(1); }
+    100%{ transform: translate(90px,70px) scale(1.18); }
+  }
+  @keyframes floatB{
+    0%{ transform: translate(0,0) scale(1); }
+    100%{ transform: translate(-80px,-60px) scale(1.12); }
+  }
+  @keyframes floatC{
+    0%{ transform: translate(0,0) scale(1); }
+    100%{ transform: translate(-70px,50px) scale(0.88); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .blob{ animation: none; }
+  }
+
+  /* ---- card ---- */
+  .login-card{
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 400px;
+    background: rgba(42,23,48,0.78);
+    border: 1px solid var(--line-dark);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 46px 36px 38px;
+    clip-path: polygon(0 0, 100% 0, 100% 94%, 92% 100%, 0 100%);
+    text-align: center;
+  }
+  .logo-row{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 30px;
+  }
+  .logo-row span.word{ font-family:'Anton'; font-size: 24px; letter-spacing: 0.02em; }
+  .logo-row span.beta{
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    padding: 2px 6px;
+    border-radius: 3px;
+  }
+  h1{ font-size: 30px; margin-bottom: 10px; }
+  h1 em{ font-style: normal; color: var(--gold); }
+  .sub{
+    color: var(--muted-dark);
+    font-size: 14px;
+    max-width: 30ch;
+    margin: 0 auto 30px;
+  }
+  .g-btn-wrap{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 26px;
+  }
+  .fallback-btn{
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    background: var(--ink-dark);
+    color: #241C2C;
+    border: none;
+    padding: 12px 20px;
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  .note{
+    font-size: 12px;
+    color: var(--muted-dark);
+    line-height: 1.6;
+  }
+  .note a{ color: var(--gold); text-decoration: underline; }
+  .back{
+    display: inline-block;
+    margin-top: 24px;
+    font-size: 13px;
+    color: var(--muted-dark);
+    text-decoration: none;
+    border-top: 1px solid var(--line-dark);
+    padding-top: 18px;
+    width: 100%;
+  }
+  .back:hover{ color: var(--ink-dark); }
+
+  #postSignIn{ display: none; }
+  #postSignIn h1{ font-size: 26px; }
+  #postSignIn .avatar-name{ color: var(--gold); }
+</style>
+</head>
+<body>
+
+  <div class="blob blob-a"></div>
+  <div class="blob blob-b"></div>
+  <div class="blob blob-c"></div>
+
+  <div class="login-card">
+
+    <div id="preSignIn">
+      <div class="logo-row">
+        <svg width="26" height="26" viewBox="0 0 40 40">
+          <defs>
+            <radialGradient id="logoGrad" cx="35%" cy="30%" r="75%">
+              <stop offset="0%" stop-color="#DCA860"/>
+              <stop offset="55%" stop-color="#9B3FA0"/>
+              <stop offset="100%" stop-color="#2A1730"/>
+            </radialGradient>
+          </defs>
+          <circle cx="20" cy="20" r="19" fill="url(#logoGrad)" stroke="#4E3158" stroke-width="1"/>
+          <path d="M20 9 L25 20 L20 31 L15 20 Z" fill="none" stroke="#F5EDEF" stroke-width="1.6"/>
+          <line x1="11" y1="20" x2="29" y2="20" stroke="#F5EDEF" stroke-width="1.2" opacity="0.6"/>
+        </svg>
+        <span class="word">WRAITH</span>
+        <span class="beta">BETA</span>
+      </div>
+
+      <h1>Sign <em>in.</em></h1>
+      <p class="sub">Access your bag, order history, and early drop alerts.</p>
+
+      <div class="g-btn-wrap">
+        <!-- Google renders its real, official button here -->
+        <div id="g_id_onload"
+             data-client_id="YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com"
+             data-callback="handleGoogleCredential"
+             data-auto_prompt="false">
+        </div>
+        <div class="g_id_signin"
+             data-type="standard"
+             data-shape="pill"
+             data-theme="filled_black"
+             data-text="continue_with"
+             data-size="large">
+        </div>
+      </div>
+
+      <p class="note">By continuing you agree to WRAITH's Terms and Privacy Policy. We never see or store your Google password — Google handles that on their own sign-in screen.</p>
+    </div>
+
+    <div id="postSignIn">
+      <div class="logo-row">
+        <span class="word">WRAITH</span>
+        <span class="beta">BETA</span>
+      </div>
+      <h1>Welcome,<br><span class="avatar-name" id="signedInName">friend</span></h1>
+      <p class="sub" id="signedInEmail"></p>
+    </div>
+
+    <a href="index.html" class="back">← Back to shop</a>
+  </div>
+
+  <script>
+    function parseJwt(token){
+      var base64Url = token.split('.')[1];
+      var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c){
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      }).join(''));
+      return JSON.parse(jsonPayload);
+    }
+    function handleGoogleCredential(response){
+      var data = parseJwt(response.credential);
+      document.getElementById('signedInName').textContent = data.name || data.email;
+      document.getElementById('signedInEmail').textContent = data.email || '';
+      document.getElementById('preSignIn').style.display = 'none';
+      document.getElementById('postSignIn').style.display = 'block';
+    }
+  </script>
+</body>
+</html>
