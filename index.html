@@ -48,7 +48,7 @@
     text-transform: none;
   }
   a{ color: inherit; text-decoration: none; }
-  .wrap{ max-width: 1180px; margin: 0 auto; padding: 0 20px; }
+  .wrap{ max-width: 1180px; margin: 0 auto; padding: 0 28px; }
 
   /* ---- ticker ---- */
   .ticker{
@@ -71,31 +71,90 @@
   }
 
   /* ---- header ---- */
-  header{
-    background: var(--bg-dark);
-    border-bottom: 1px solid var(--line-dark);
+    header{
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    overflow: hidden;
+    background:
+      radial-gradient(650px 280px at 68% 0%, rgba(220,168,96,0.16), transparent 60%),
+      radial-gradient(600px 260px at 28% 15%, rgba(155,63,160,0.4), transparent 65%),
+      linear-gradient(180deg, var(--bg-dark-2), var(--bg-dark));
   }
   .header-bar{
+    position: relative;
+    z-index: 1;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 22px 0;
+    padding: 26px 0;
+    gap: 16px;
   }
-  .logo{ font-family: 'Anton'; font-size: 26px; letter-spacing: 0.02em; color: var(--ink-dark); }
-  nav ul{
+  .logo{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Anton';
+    font-size: 26px;
+    letter-spacing: 0.02em;
+    color: var(--ink-dark);
+  }
+  .logo svg{ flex-shrink: 0; }
+  .desktop-nav ul{
     list-style: none;
     display: flex;
     gap: 32px;
     font-size: 14px;
   }
-  nav a{ color: var(--muted-dark); transition: color .15s; }
-  nav a:hover{ color: var(--ink-dark); }
-  .cart{
-    font-size: 14px;
-    color: var(--muted-dark);
-    border: 1px solid var(--line-dark);
-    padding: 8px 16px;
+  .desktop-nav a{ color: var(--muted-dark); transition: color .15s; }
+  .desktop-nav a:hover{ color: var(--ink-dark); }
+
+  .header-actions{
+    display: flex;
+    align-items: center;
+    gap: 6px;
   }
+  .cart-text{
+    font-size: 13px;
+    color: var(--muted-dark);
+    margin-right: 6px;
+    transition: color .15s;
+    white-space: nowrap;
+  }
+  .cart-text:hover{ color: var(--ink-dark); }
+  .icon-btn{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    color: var(--ink-dark);
+    cursor: pointer;
+    padding: 8px;
+    transition: color .15s;
+  }
+  .icon-btn:hover{ color: var(--gold); }
+  .menu-toggle{ display: none; }
+
+  .mobile-nav{
+    display: none;
+    flex-direction: column;
+    background: var(--bg-dark-2);
+    border-top: 1px solid var(--line-dark);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .3s ease;
+    position: relative;
+    z-index: 1;
+  }
+  .mobile-nav a{
+    padding: 16px 28px;
+    border-bottom: 1px solid var(--line-dark);
+    color: var(--muted-dark);
+    font-size: 15px;
+  }
+  .mobile-nav a:hover{ color: var(--ink-dark); }
+  .mobile-nav.open{ max-height: 240px; }
 
   /* ---- hero ---- */
   .hero{
@@ -123,6 +182,418 @@
   }
   .hero h1 em{
     font-style: normal;
+    color: var(--gold);
+  }
+  .hero p{
+    max-width: 42ch;
+    color: var(--muted-dark);
+    margin-top: 22px;
+    font-size: 16px;
+  }
+  .hero-actions{
+    margin-top: 34px;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .btn{
+    display: inline-block;
+    padding: 14px 26px;
+    font-size: 14px;
+    font-weight: 600;
+    border: 1px solid var(--ink-dark);
+  }
+  .btn-solid{
+    background: var(--ink-dark);
+    color: var(--bg-dark);
+  }
+  .btn-solid:hover{ background: var(--gold); border-color: var(--gold); color: var(--bg-dark); }
+  .btn-outline{ color: var(--ink-dark); }
+  .btn-outline:hover{ border-color: var(--gold); color: var(--gold); }
+
+  .hero-art{
+    aspect-ratio: 4/5;
+    background: linear-gradient(160deg, var(--bg-dark-2), var(--bg-dark) 65%);
+    border: 1px solid var(--line-dark);
+    position: relative;
+    clip-path: polygon(0 0, 100% 0, 100% 92%, 88% 100%, 0 100%);
+    display: flex;
+    align-items: flex-end;
+    padding: 24px;
+    overflow: hidden;
+  }
+  .hero-art img{
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+  }
+  .hero-art .tag{
+    position: relative;
+    z-index: 1;
+    font-size: 12px;
+    color: #fff;
+    text-shadow: 0 1px 6px rgba(0,0,0,0.5);
+    border-top: 1px solid rgba(255,255,255,0.4);
+    padding-top: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  /* ---- section heading ---- */
+  .section{ padding: 80px 0; border-bottom: 1px solid var(--line); }
+  .section-head{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 44px;
+    gap: 20px;
+  }
+  .section-head h2{ font-size: clamp(32px, 4.5vw, 48px); color: var(--ink); }
+  .section-head p{ color: var(--muted); font-size: 14px; max-width: 30ch; }
+
+  /* ---- products ---- */
+  .grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+  .card{
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+  }
+  .card-art{
+    aspect-ratio: 1/1;
+    overflow: hidden;
+  }
+  .card-art img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .card-body{
+    padding: 20px 22px 26px;
+    border-top: 1px solid var(--line);
+  }
+  .card-body .row{
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 6px;
+  }
+  .card-body h3{ font-family:'Work Sans'; font-weight: 600; font-size: 16px; color: var(--ink); }
+  .card-body .price{ font-size: 15px; color: var(--accent); font-weight: 600; }
+  .card-body .desc{ font-size: 13px; color: var(--muted); margin-bottom: 14px; }
+  .card-body .add{
+    font-size: 13px;
+    color: var(--ink);
+    border: 1px solid var(--line);
+    padding: 10px 0;
+    text-align: center;
+    display: block;
+    transition: border-color .15s, color .15s;
+  }
+  .card-body .add:hover{ border-color: var(--accent); color: var(--accent); }
+
+  /* ---- about / manifesto ---- */
+  .manifesto{
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 60px;
+  }
+  .manifesto .big{
+    font-size: clamp(26px, 3.4vw, 34px);
+    color: var(--ink);
+  }
+  .manifesto .col p{
+    color: var(--muted);
+    font-size: 15px;
+    margin-bottom: 16px;
+    max-width: 52ch;
+  }
+
+  /* ---- newsletter ---- */
+  #news{ background: var(--bg-dark); border-bottom: none; }
+  .news{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+  .news h2{ font-size: clamp(30px, 4vw, 44px); max-width: 14ch; color: var(--ink-dark); }
+  .news form{
+    display: flex;
+    border: 1px solid var(--line-dark);
+    max-width: 420px;
+    width: 100%;
+  }
+  .news input{
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--ink-dark);
+    padding: 14px 16px;
+    font-family: inherit;
+    font-size: 14px;
+  }
+  .news input::placeholder{ color: var(--muted-dark); }
+  .news button{
+    background: var(--gold);
+    color: var(--bg-dark);
+    border: none;
+    padding: 0 22px;
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  .news button:hover{ background: var(--accent); color: var(--on-accent); }
+  .news .note{ font-size: 12px; color: var(--muted-dark); margin-top: 10px; }
+
+  /* ---- footer ---- */
+  footer{ background: var(--bg-dark); padding: 44px 0; }
+  .foot-grid{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    font-size: 13px;
+    color: var(--muted-dark);
+  }
+  .foot-links{ display: flex; gap: 24px; }
+  .foot-links a:hover{ color: var(--ink-dark); }
+
+  @media (max-width: 860px){
+    .hero-grid{ grid-template-columns: 1fr; }
+    .grid{ grid-template-columns: repeat(2, 1fr); }
+    .manifesto{ grid-template-columns: 1fr; }
+    .desktop-nav{ display: none; }
+    .menu-toggle{ display: inline-flex; }
+    .mobile-nav{ display: flex; }
+    .section-head{ flex-direction: column; align-items: flex-start; }
+  }
+  @media (max-width: 520px){
+    .grid{ grid-template-columns: 1fr; }
+    .cart-text{ display: none; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .ticker span{ animation: none; }
+    .hero{ animation: none; background-position: 50% 50%; }
+  }
+
+  :focus-visible{ outline: 2px solid var(--accent); outline-offset: 2px; }
+</style>
+</head>
+<body>
+
+  <div class="ticker" aria-hidden="true">
+    <span>FREE SHIPPING OVER $75 &nbsp;—&nbsp; NEW DROP: CH.03 NOW LIVE &nbsp;—&nbsp; RESTOCKS DON'T LAST &nbsp;—&nbsp; FREE SHIPPING OVER $75 &nbsp;—&nbsp; NEW DROP: CH.03 NOW LIVE &nbsp;—&nbsp; RESTOCKS DON'T LAST &nbsp;—&nbsp;</span>
+  </div>
+
+  <header>
+    <div class="wrap header-bar">
+      <a href="#" class="logo">
+        <svg width="30" height="30" viewBox="0 0 40 40">
+          <defs>
+            <radialGradient id="logoGrad" cx="35%" cy="30%" r="75%">
+              <stop offset="0%" stop-color="#DCA860"/>
+              <stop offset="55%" stop-color="#9B3FA0"/>
+              <stop offset="100%" stop-color="#2A1730"/>
+            </radialGradient>
+          </defs>
+          <circle cx="20" cy="20" r="19" fill="url(#logoGrad)" stroke="#4E3158" stroke-width="1"/>
+          <path d="M20 9 L25 20 L20 31 L15 20 Z" fill="none" stroke="#F5EDEF" stroke-width="1.6"/>
+          <line x1="11" y1="20" x2="29" y2="20" stroke="#F5EDEF" stroke-width="1.2" opacity="0.6"/>
+        </svg>
+        WRAITH<span style="font-size:11px; font-weight:600; color:var(--gold); border:1px solid var(--gold); padding:2px 6px; margin-left:4px; vertical-align:middle; border-radius:3px;">BETA</span>
+      </a>
+      <nav class="desktop-nav">
+        <ul>
+          <li><a href="#shop">Shop</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="#news">Notify</a></li>
+        </ul>
+      </nav>
+      <div class="header-actions">
+        <a href="#shop" class="cart-text">Bag (0)</a>
+        <button class="icon-btn" aria-label="Search">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        </button>
+        <button class="icon-btn menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false">
+          <svg id="menuIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <nav class="mobile-nav" id="mobileNav">
+      <a href="#shop">Shop</a>
+      <a href="about.html">About</a>
+      <a href="#news">Notify</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div>
+          <h1>Made for<br>what's left<br><em>after dark.</em></h1>
+          <p>Small-batch clothing built from worn-in fabric and quiet menace. No seasons, no restocks promised — just chapters.</p>
+          <div class="hero-actions">
+            <a href="#shop" class="btn btn-solid">Shop Chapter 03</a>
+            <a href="about.html" class="btn btn-outline">Our story</a>
+          </div>
+        </div>
+        <div class="hero-art">
+          <img src="https://picsum.photos/seed/wraithhero/700/900" alt="">
+          <div class="tag"><span>CH.03 — HOLLOW</span><span>Est. 2023</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="shop">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Chapter 03: Hollow</h2>
+        <p>Six pieces. Washed cotton, oxblood hardware, limited run.</p>
+      </div>
+      <div class="grid">
+
+        <div class="card">
+          <div class="card-art"><img src="https://picsum.photos/seed/ashhoodie/600/600" alt="Ash Hoodie"></div>
+          <div class="card-body">
+            <div class="row"><h3>Ash Hoodie</h3><span class="price">$68</span></div>
+            <p class="desc">Heavyweight fleece, garment-dyed, dropped shoulder.</p>
+            <a href="#" class="add">Add to bag</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-art"><img src="https://picsum.photos/seed/splittee/600/600" alt="Split Tee"></div>
+          <div class="card-body">
+            <div class="row"><h3>Split Tee</h3><span class="price">$34</span></div>
+            <p class="desc">Boxy fit, raw hem, printed back graphic.</p>
+            <a href="#" class="add">Add to bag</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-art"><img src="https://picsum.photos/seed/runecap/600/600" alt="Rune Cap"></div>
+          <div class="card-body">
+            <div class="row"><h3>Rune Cap</h3><span class="price">$28</span></div>
+            <p class="desc">Unstructured six-panel, embroidered mark.</p>
+            <a href="#" class="add">Add to bag</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-art"><img src="https://picsum.photos/seed/cargopant/600/600" alt="Cargo Pant"></div>
+          <div class="card-body">
+            <div class="row"><h3>Cargo Pant</h3><span class="price">$82</span></div>
+            <p class="desc">Ripstop nylon, tapered leg, triple stitch.</p>
+            <a href="#" class="add">Add to bag</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-art"><img src="https://picsum.photos/seed/bonetote/600/600" alt="Bone Tote"></div>
+          <div class="card-body">
+            <div class="row"><h3>Bone Tote</h3><span class="price">$22</span></div>
+            <p class="desc">Waxed canvas, reinforced base, one size.</p>
+            <a href="#" class="add">Add to bag</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-art"><img src="https://picsum.photos/seed/vigiljacket/600/600" alt="Vigil Jacket"></div>
+          <div class="card-body">
+            <div class="row"><h3>Vigil Jacket</h3><span class="price">$124</span></div>
+            <p class="desc">Coach shell, quilted lining, snap front.</p>
+            <a href="#" class="add">Add to bag</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="about">
+    <div class="wrap">
+      <div class="manifesto">
+        <p class="big">We don't design for a season. We design for the hours nobody's watching.</p>
+        <div class="col">
+          <p>WRAITH started in a garage with one screen printer and a rule: nothing goes out that we wouldn't wear until it falls apart. That rule hasn't changed.</p>
+          <p>Every chapter is a small, deliberate run — cut, dyed, and printed in batches too small to reorder. When it's gone, it becomes the last one.</p>
+          <p>No influencer boxes. No filler drops. Just pieces built to outlast the trend they arrived in.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="news">
+    <div class="wrap">
+      <div class="news">
+        <h2>Know before the drop sells out.</h2>
+        <div>
+          <form onsubmit="event.preventDefault(); this.querySelector('button').textContent='You\'re in';">
+            <input type="email" placeholder="your@email.com" required>
+            <button type="submit">Notify me</button>
+          </form>
+          <p class="note">One email per drop. Unsubscribe whenever.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <div class="foot-grid">
+        <span>© 2026 WRAITH. All rights reserved.</span>
+        <div class="foot-links">
+          <a href="#">Shipping</a>
+          <a href="#">Returns</a>
+          <a href="#">Contact</a>
+          <a href="#">Instagram</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    var menuToggle = document.getElementById('menuToggle');
+    var menuIcon = document.getElementById('menuIcon');
+    var mobileNav = document.getElementById('mobileNav');
+    var hamburgerLines = '<line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line>';
+    var closeLines = '<line x1="5" y1="5" x2="19" y2="19"></line><line x1="19" y1="5" x2="5" y2="19"></line>';
+    menuToggle.addEventListener('click', function(){
+      var isOpen = mobileNav.classList.toggle('open');
+      menuToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      menuIcon.innerHTML = isOpen ? closeLines : hamburgerLines;
+    });
+    mobileNav.querySelectorAll('a').forEach(function(link){
+      link.addEventListener('click', function(){
+        mobileNav.classList.remove('open');
+        menuToggle.setAttribute('aria-expanded', 'false');
+        menuIcon.innerHTML = hamburgerLines;
+      });
+    });
+  </script>
+  <script src="blur-reveal.js"></script>
+</body>
+</html>    font-style: normal;
     color: var(--gold);
   }
   .hero p{
