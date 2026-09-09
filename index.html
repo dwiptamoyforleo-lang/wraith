@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sign In — WRAITH</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>WRAITH — Sign In</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <script src="https://accounts.google.com/gsi/client" async defer></script>
@@ -18,6 +18,10 @@
     --line-dark: #4E3158;
   }
   *{ box-sizing: border-box; margin:0; padding:0; }
+  html, body{
+    overflow-x: hidden;
+    width: 100%;
+  }
   body{
     min-height: 100vh;
     display: flex;
@@ -28,7 +32,6 @@
     color: var(--ink-dark);
     background: linear-gradient(160deg, var(--bg-dark), var(--bg-dark-2));
     position: relative;
-    overflow: hidden;
   }
   h1,.display{
     font-family: 'Anton', sans-serif;
@@ -38,7 +41,7 @@
 
   /* ---- animated background blobs ---- */
   .blob{
-    position: absolute;
+    position: fixed;
     border-radius: 50%;
     filter: blur(90px);
     opacity: 0.55;
@@ -143,17 +146,6 @@
     line-height: 1.6;
   }
   .note a{ color: var(--gold); text-decoration: underline; }
-  .back{
-    display: inline-block;
-    margin-top: 24px;
-    font-size: 13px;
-    color: var(--muted-dark);
-    text-decoration: none;
-    border-top: 1px solid var(--line-dark);
-    padding-top: 18px;
-    width: 100%;
-  }
-  .back:hover{ color: var(--ink-dark); }
 
   #postSignIn{ display: none; }
   #postSignIn h1{ font-size: 26px; }
@@ -217,7 +209,6 @@
       <p class="sub" id="signedInEmail"></p>
     </div>
 
-    <a href="index.html" class="back">← Back to shop</a>
   </div>
 
   <script>
@@ -231,10 +222,10 @@
     }
     function handleGoogleCredential(response){
       var data = parseJwt(response.credential);
-      document.getElementById('signedInName').textContent = data.name || data.email;
-      document.getElementById('signedInEmail').textContent = data.email || '';
-      document.getElementById('preSignIn').style.display = 'none';
-      document.getElementById('postSignIn').style.display = 'block';
+      try{
+        sessionStorage.setItem('wraith_user_name', data.name || data.email || '');
+      }catch(e){}
+      window.location.href = 'shop.html';
     }
   </script>
 </body>
