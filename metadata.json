@@ -1,0 +1,6 @@
+{
+  "name": "WRAITH",
+  "description": "An avant-garde dark luxury streetwear atelier and shop featuring smooth animations, editorial aesthetics, and seamless authentication.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
