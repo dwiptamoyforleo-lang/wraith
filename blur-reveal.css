@@ -30,13 +30,13 @@ html {
   position: fixed;
   top: 0;
   left: 0;
-  height: 2px;
+  height: 2.5px;
   width: 0%;
-  background: var(--accent, #D6FF38);
+  background: linear-gradient(90deg, #FF4D94 0%, #B266FF 50%, #E5A93C 100%);
   z-index: 9999;
   pointer-events: none;
   transition: width 0.1s linear;
-  box-shadow: 0 0 10px var(--accent, #D6FF38);
+  box-shadow: 0 0 10px rgba(229, 169, 60, 0.5);
 }
 
 /* Scroll Reveal Elements */
@@ -172,9 +172,9 @@ html {
 }
 
 .back-to-top:hover {
-  background: var(--accent, #D6FF38);
-  border-color: var(--accent, #D6FF38);
-  color: #0A0B0E;
+  background: var(--gold-gradient, var(--accent, #E5A93C));
+  border-color: var(--accent, #E5A93C);
+  color: #13091F;
   transform: translateY(-3px) scale(1.05);
 }
 
@@ -184,9 +184,9 @@ html {
   bottom: 32px;
   left: 50%;
   transform: translateX(-50%) translateY(40px);
-  background: rgba(17, 19, 24, 0.95);
-  border: 1px solid var(--accent, #D6FF38);
-  color: #F8FAFC;
+  background: rgba(25, 14, 39, 0.95);
+  border: 1px solid var(--border-pink, rgba(255, 77, 148, 0.45));
+  color: #FFFFFF;
   padding: 12px 22px;
   border-radius: 9999px;
   font-size: 13px;
@@ -196,7 +196,7 @@ html {
   display: flex;
   align-items: center;
   gap: 10px;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6), 0 0 20px rgba(214, 255, 56, 0.15);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6), 0 0 20px rgba(229, 169, 60, 0.25);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   opacity: 0;
@@ -214,6 +214,6 @@ html {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--accent, #D6FF38);
-  box-shadow: 0 0 8px var(--accent, #D6FF38);
+  background: var(--pink, #FF4D94);
+  box-shadow: 0 0 8px var(--pink, #FF4D94);
 }

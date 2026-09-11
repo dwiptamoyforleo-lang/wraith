@@ -10,21 +10,42 @@
 <link rel="stylesheet" href="blur-reveal.css">
 <style>
   :root {
-    --bg-primary: #08090C;
-    --bg-surface: #0E1015;
-    --bg-card: #13161E;
-    --bg-glass: rgba(14, 16, 21, 0.85);
-    --border-subtle: rgba(255, 255, 255, 0.08);
-    --border-medium: rgba(255, 255, 255, 0.16);
-    --border-active: rgba(214, 255, 56, 0.4);
+    --bg-primary: #0E0716;
+    --bg-surface: #190E27;
+    --bg-card: #241438;
+    --bg-glass: rgba(25, 14, 39, 0.88);
+    --border-subtle: rgba(255, 255, 255, 0.1);
+    --border-medium: rgba(255, 255, 255, 0.18);
+    --border-active: rgba(229, 169, 60, 0.5);
+    --border-pink: rgba(255, 77, 148, 0.45);
+    --border-purple: rgba(178, 102, 255, 0.4);
+
     --text-pure: #FFFFFF;
-    --text-primary: #F1F5F9;
-    --text-muted: #8491A5;
-    --text-dim: #4D5667;
-    --accent: #D6FF38;
-    --accent-hover: #E4FF68;
-    --accent-dim: rgba(214, 255, 56, 0.12);
-    --accent-contrast: #08090C;
+    --text-primary: #FFFFFF;
+    --text-secondary: #F5EEFC;
+    --text-muted: #D5C7E6;
+    --text-dim: #9E8AB5;
+
+    /* Pink */
+    --pink: #FF4D94;
+    --pink-hover: #FF6BAA;
+    --pink-glow: rgba(255, 77, 148, 0.3);
+    --pink-dim: rgba(255, 77, 148, 0.15);
+
+    /* Purple */
+    --purple: #B266FF;
+    --purple-hover: #C585FF;
+    --purple-glow: rgba(178, 102, 255, 0.3);
+    --purple-dim: rgba(178, 102, 255, 0.15);
+
+    /* Golden Yellow with brown undertones */
+    --accent: #E5A93C;
+    --accent-hover: #F2BA4E;
+    --accent-brown: #B87B28;
+    --accent-dim: rgba(229, 169, 60, 0.16);
+    --accent-glow: rgba(229, 169, 60, 0.35);
+    --accent-contrast: #13091F;
+    --gold-gradient: linear-gradient(135deg, #F5BF58 0%, #E5A93C 55%, #B87B28 100%);
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -95,7 +116,7 @@
     transition: all 0.2s;
   }
   .back-btn:hover {
-    background: var(--accent);
+    background: var(--gold-gradient);
     color: var(--accent-contrast);
     border-color: var(--accent);
   }
@@ -110,9 +131,9 @@
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    background: var(--accent-dim);
-    border: 1px solid var(--border-active);
-    color: var(--accent);
+    background: var(--pink-dim);
+    border: 1px solid var(--border-pink);
+    color: var(--pink);
     padding: 4px 14px;
     border-radius: 9999px;
     font-size: 11px;
@@ -214,10 +235,10 @@
     <div class="wrap" style="display:flex; justify-content:space-between; align-items:center;">
       <a href="shop.html" class="brand-logo">
         <svg width="26" height="26" viewBox="0 0 40 40" fill="none">
-          <rect width="40" height="40" rx="10" fill="#13161E" stroke="#2B3242" stroke-width="1.2"/>
-          <path d="M20 7 L31 20 L20 33 L9 20 Z" stroke="#D6FF38" stroke-width="1.8" fill="none"/>
-          <path d="M14 20 L26 20" stroke="#F1F5F9" stroke-width="1.4"/>
-          <circle cx="20" cy="20" r="2.5" fill="#D6FF38"/>
+          <rect width="40" height="40" rx="10" fill="#190E27" stroke="#3E225D" stroke-width="1.2"/>
+          <path d="M20 7 L31 20 L20 33 L9 20 Z" stroke="#E5A93C" stroke-width="1.8" fill="none"/>
+          <path d="M14 20 L26 20" stroke="#FFFFFF" stroke-width="1.4"/>
+          <circle cx="20" cy="20" r="2.5" fill="#FF4D94"/>
         </svg>
         <span class="brand-title">WRAITH</span>
       </a>

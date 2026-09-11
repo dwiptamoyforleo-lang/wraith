@@ -32,9 +32,9 @@ app.get(['/auth/callback', '/auth/callback/'], (req, res) => {
   <meta charset="utf-8">
   <title>Authenticating...</title>
   <style>
-    body { background: #08090C; color: #F1F5F9; font-family: sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; }
-    .msg { text-align: center; font-size: 14px; color: #94A3B8; }
-    .spinner { width: 24px; height: 24px; border: 2px solid rgba(214,255,56,0.2); border-top-color: #D6FF38; border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 12px; }
+    body { background: #0E0716; color: #FFFFFF; font-family: sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; }
+    .msg { text-align: center; font-size: 14px; color: #D5C7E6; }
+    .spinner { width: 24px; height: 24px; border: 2px solid rgba(229,169,60,0.25); border-top-color: #E5A93C; border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 12px; }
     @keyframes spin { to { transform: rotate(360deg); } }
   </style>
 </head>
