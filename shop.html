@@ -69,13 +69,34 @@
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; background: var(--bg-primary); color: var(--text-primary); }
+  *, *::before, *::after { box-sizing: border-box; }
+  html {
+    scroll-behavior: smooth;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    -webkit-text-size-adjust: 100%;
+  }
   body {
     font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
     line-height: 1.6;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
     overflow-x: hidden;
     position: relative;
+    margin: 0;
+    padding: 0;
     -webkit-font-smoothing: antialiased;
+  }
+
+  img, video, canvas {
+    max-width: 100%;
+    height: auto;
   }
 
   /* Subtle noise texture overlay */
@@ -100,7 +121,13 @@
   a { color: inherit; text-decoration: none; }
   button { font-family: inherit; }
 
-  .wrap { max-width: 1240px; margin: 0 auto; padding: 0 28px; }
+  .wrap {
+    width: 100%;
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 28px;
+    box-sizing: border-box;
+  }
 
   /* ---- Announcement Ticker ---- */
   .top-ticker {
@@ -115,6 +142,9 @@
     white-space: nowrap;
     position: relative;
     z-index: 50;
+    width: 100%;
+    max-width: 100%;
+    contain: paint;
   }
   .ticker-content {
     display: inline-flex;
@@ -348,6 +378,8 @@
     right: 15%;
     width: 620px;
     height: 620px;
+    max-width: 90vw;
+    max-height: 90vw;
     border-radius: 50%;
     background: radial-gradient(circle, rgba(178, 102, 255, 0.18) 0%, rgba(14, 7, 22, 0) 70%);
     pointer-events: none;
@@ -359,6 +391,8 @@
     left: 5%;
     width: 520px;
     height: 520px;
+    max-width: 90vw;
+    max-height: 90vw;
     border-radius: 50%;
     background: radial-gradient(circle, rgba(255, 77, 148, 0.15) 0%, rgba(14, 7, 22, 0) 70%);
     pointer-events: none;
@@ -370,6 +404,8 @@
     right: 35%;
     width: 460px;
     height: 460px;
+    max-width: 90vw;
+    max-height: 90vw;
     border-radius: 50%;
     background: radial-gradient(circle, rgba(229, 169, 60, 0.14) 0%, rgba(14, 7, 22, 0) 70%);
     pointer-events: none;
@@ -760,6 +796,9 @@
     border-bottom: 1px solid var(--border-subtle);
     padding: 50px 0;
     overflow: hidden;
+    width: 100%;
+    max-width: 100%;
+    contain: paint;
   }
   .lookbook-strip h2 {
     text-align: center;
@@ -1264,23 +1303,188 @@
 
   /* Responsive Rules */
   @media (max-width: 992px) {
-    .hero-grid { grid-template-columns: 1fr; }
-    .products-grid { grid-template-columns: repeat(2, 1fr); }
-    .manifesto-grid { grid-template-columns: 1fr; }
-    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+    .products-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .manifesto-grid { grid-template-columns: 1fr; gap: 44px; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
     .desktop-nav { display: none; }
     .menu-toggle { display: inline-flex; }
     .mobile-nav { display: flex; }
     .quick-view-card { grid-template-columns: 1fr; max-width: 480px; }
   }
 
+  @media (max-width: 768px) {
+    .desktop-br { display: none; }
+    .hero-section { padding: 56px 0 48px; }
+    .hero-h1 {
+      font-size: clamp(32px, 8.2vw, 48px);
+      line-height: 1.08;
+      word-break: break-word;
+      overflow-wrap: break-word;
+      margin-bottom: 20px;
+    }
+    .hero-desc {
+      font-size: 15px;
+      line-height: 1.6;
+      margin-bottom: 26px;
+      max-width: 100%;
+    }
+    .hero-meta {
+      font-size: 10.5px;
+      padding: 5px 12px;
+      margin-bottom: 18px;
+      max-width: 100%;
+      white-space: normal;
+    }
+    .section-pad { padding: 54px 0; }
+    .section-head { margin-bottom: 24px; gap: 12px; }
+    .section-head h2 { font-size: clamp(26px, 7vw, 38px); }
+    .section-head p { font-size: 14px; max-width: 100%; }
+    .catalog-controls {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 14px;
+      margin-bottom: 28px;
+      padding-bottom: 18px;
+    }
+    .filter-group { width: 100%; gap: 6px; }
+    .filter-btn { padding: 7px 14px; font-size: 11px; }
+    .manifesto-lead { font-size: clamp(24px, 6.5vw, 36px); }
+    .craft-pillars { grid-template-columns: 1fr; gap: 12px; }
+    .header-bar { padding: 14px 0; gap: 12px; }
+    .brand-title { font-size: 20px; }
+    .brand-logo svg { width: 26px; height: 26px; }
+  }
+
   @media (max-width: 600px) {
-    .products-grid { grid-template-columns: 1fr; }
-    .wrap { padding: 0 20px; }
-    .footer-grid { grid-template-columns: 1fr; }
-    .catalog-controls { flex-direction: column; align-items: flex-start; }
-    .newsletter-form { flex-direction: column; border-radius: 16px; gap: 8px; }
-    .newsletter-form button { width: 100%; }
+    .wrap { padding: 0 16px; width: 100%; max-width: 100%; }
+    .header-bar { padding: 12px 0; gap: 8px; }
+    .brand-logo { gap: 6px; }
+    .brand-logo svg { width: 24px; height: 24px; }
+    .brand-title { font-size: 18px; letter-spacing: 0.04em; }
+    .brand-badge { font-size: 9px; padding: 2px 6px; }
+    .header-actions { gap: 6px; }
+    .bag-trigger { padding: 6px 10px; font-size: 11px; gap: 5px; }
+    .user-header-badge {
+      padding: 2px;
+      background: transparent;
+      border: none;
+      gap: 0;
+    }
+    .user-header-badge .user-name-label,
+    .user-header-badge .sign-out-btn {
+      display: none;
+    }
+    .user-avatar-mini { width: 28px; height: 28px; font-size: 11px; }
+    .menu-toggle { width: 36px; height: 36px; padding: 6px; }
+    .mobile-nav a {
+      padding: 14px 18px;
+      font-size: 13px;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+    }
+    .hero-section { padding: 42px 0 36px; }
+    .hero-grid { gap: 32px; }
+    .hero-ctas {
+      flex-direction: column;
+      width: 100%;
+      gap: 12px;
+    }
+    .hero-ctas .btn {
+      width: 100%;
+      justify-content: center;
+      padding: 13px 20px;
+      font-size: 13px;
+      min-height: 46px;
+    }
+    .hero-visual-card {
+      border-radius: 14px;
+      aspect-ratio: 1 / 1;
+      max-width: 100%;
+    }
+    .hero-visual-overlay { padding: 14px; }
+    .hero-visual-tag {
+      flex-wrap: wrap;
+      gap: 6px;
+      font-size: 10px;
+      padding-top: 8px;
+    }
+    .products-grid { grid-template-columns: 1fr; gap: 20px; }
+    .product-card { border-radius: 14px; }
+    .product-body { padding: 16px 16px 18px; }
+    .product-title-row { flex-wrap: wrap; gap: 6px; }
+    .product-title { font-size: 16px; }
+    .product-price { font-size: 15px; }
+    .product-desc { font-size: 12.5px; margin-bottom: 14px; }
+    .size-btn { padding: 8px 0; min-height: 38px; font-size: 11px; }
+    .add-bag-btn { padding: 12px 0; min-height: 44px; font-size: 12px; }
+    .lookbook-strip { padding: 36px 0; }
+    .lookbook-item { width: 220px; height: 300px; }
+    .lookbook-strip h2 { font-size: 11px; margin-bottom: 20px; }
+    .manifesto-grid { gap: 28px; }
+    .manifesto-lead { font-size: clamp(22px, 6vw, 30px); }
+    .manifesto-body { font-size: 14px; gap: 16px; }
+    .pillar-card { padding: 14px 16px; }
+    .newsletter-box { gap: 24px; }
+    .newsletter-text h2 { font-size: clamp(24px, 7vw, 34px); margin-bottom: 8px; }
+    .newsletter-text p { font-size: 14px; }
+    .newsletter-form-wrap { max-width: 100%; }
+    .newsletter-form {
+      flex-direction: column;
+      border-radius: 14px;
+      padding: 6px;
+      gap: 8px;
+      width: 100%;
+    }
+    .newsletter-form input { width: 100%; padding: 10px 14px; font-size: 14px; }
+    .newsletter-form button { width: 100%; padding: 12px 20px; min-height: 44px; font-size: 12px; }
+    footer { padding: 44px 0 32px; }
+    .footer-grid { grid-template-columns: 1fr; gap: 24px; margin-bottom: 28px; }
+    .footer-col h5 { font-size: 13px; margin-bottom: 12px; }
+    .footer-bottom {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 12px;
+      padding-top: 20px;
+    }
+    .footer-bottom div {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 14px;
+    }
+    .modal-backdrop { padding: 12px; }
+    .quick-view-card { border-radius: 16px; max-width: 100%; max-height: 88vh; }
+    .modal-close-btn { top: 10px; right: 10px; width: 32px; height: 32px; font-size: 18px; }
+    .modal-info-col { padding: 20px 16px 24px; }
+    .modal-info-col h2 { font-size: 20px; margin-bottom: 6px; }
+    .modal-info-col .product-price { font-size: 18px; margin-bottom: 10px; }
+    .modal-info-col p { font-size: 13px; }
+    .modal-specs-list { margin: 12px 0; padding: 10px 12px; font-size: 11.5px; }
+  }
+
+  @media (max-width: 480px) {
+    .cart-drawer { max-width: 100%; }
+    .drawer-head { padding: 16px 18px; }
+    .drawer-head h3 { font-size: 16px; }
+    .free-shipping-meter { padding: 10px 18px; font-size: 11.5px; }
+    .drawer-items { padding: 14px 18px; gap: 14px; }
+    .cart-item-row { gap: 12px; padding-bottom: 14px; }
+    .cart-item-img { width: 64px; height: 78px; }
+    .cart-item-title { font-size: 13px; }
+    .drawer-footer { padding: 16px 18px; }
+    .drawer-subtotal { font-size: 15px; margin-bottom: 12px; }
+    .checkout-btn { padding: 13px; font-size: 13px; min-height: 48px; }
+  }
+
+  @media (max-width: 380px) {
+    .wrap { padding: 0 12px; }
+    .brand-badge { display: none; }
+    .bag-trigger span:first-of-type { display: none; }
+    .hero-h1 { font-size: clamp(26px, 8vw, 32px); }
+    .hero-meta { font-size: 9.5px; padding: 4px 10px; }
   }
 </style>
 </head>
@@ -1381,8 +1585,8 @@
             AUTUMN ATELIER RUN &nbsp;/&nbsp; NO RESTOCKS
           </div>
           <h1 class="hero-h1">
-            Engineered for<br>
-            the hours<br>
+            Engineered for<br class="desktop-br">
+            the hours<br class="desktop-br">
             <em>after dark.</em>
           </h1>
           <p class="hero-desc">

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>WRAITH — Atelier Authentication</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -54,19 +54,30 @@
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body {
+  *, *::before, *::after { box-sizing: border-box; }
+  html {
     width: 100%;
-    min-height: 100vh;
+    max-width: 100%;
     overflow-x: hidden;
+    margin: 0;
+    padding: 0;
     background: var(--bg-primary);
+    -webkit-text-size-adjust: 100%;
   }
   body {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+    margin: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 24px;
+    padding: 24px 16px;
     font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
     color: var(--text-primary);
+    background: var(--bg-primary);
     position: relative;
     -webkit-font-smoothing: antialiased;
   }
@@ -89,6 +100,8 @@
     filter: blur(100px);
     pointer-events: none;
     z-index: 0;
+    max-width: 80vw;
+    max-height: 80vw;
   }
   .glow-1 {
     width: 560px;
@@ -275,6 +288,40 @@
     background: var(--accent-hover);
     transform: translateY(-2px);
   }
+
+  @media (max-width: 480px) {
+    body {
+      padding: 16px 12px;
+    }
+    .auth-card {
+      padding: 28px 18px 24px;
+      border-radius: 16px;
+      max-width: 100%;
+    }
+    .brand-title {
+      font-size: 20px;
+    }
+    h1.auth-heading {
+      font-size: clamp(22px, 7vw, 28px);
+    }
+    .auth-sub {
+      font-size: 13px;
+      margin-bottom: 22px;
+    }
+    .ambient-glow {
+      max-width: 70vw;
+      max-height: 70vw;
+    }
+  }
+
+  @media (max-width: 360px) {
+    .auth-card {
+      padding: 24px 14px 20px;
+    }
+    h1.auth-heading {
+      font-size: 20px;
+    }
+  }
 </style>
 </head>
 <body>
@@ -442,7 +489,9 @@
               client_id: clientId,
               callback: handleGoogleCredential,
               auto_select: false,
-              cancel_on_tap_outside: true
+              cancel_on_tap_outside: true,
+              use_fedcm_for_prompt: false,
+              itp_support: true
             });
 
             var gsiBox = document.getElementById('gsiContainer');
@@ -459,8 +508,22 @@
               });
             }
 
-            // Prompt One Tap which lists device accounts on top right
-            google.accounts.id.prompt();
+            // In iframe contexts (e.g. preview windows), FedCM 'identity-credentials-get' is restricted by browser policy.
+            // Only invoke prompt() if top-level window, with safe notification handler.
+            var isInIframe = false;
+            try {
+              isInIframe = window.self !== window.top;
+            } catch (e) {
+              isInIframe = true;
+            }
+
+            if (!isInIframe) {
+              try {
+                google.accounts.id.prompt(function(notification) {
+                  // Handled silently
+                });
+              } catch (promptErr) {}
+            }
           }
 
           // Initialize Token Client with prompt: 'select_account'

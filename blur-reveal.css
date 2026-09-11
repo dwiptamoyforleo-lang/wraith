@@ -62,6 +62,13 @@ html {
   transform: translateX(40px);
 }
 
+@media (max-width: 768px) {
+  [data-reveal="left"],
+  [data-reveal="right"] {
+    transform: translateY(24px) scale(0.98);
+  }
+}
+
 [data-reveal="zoom"] {
   transform: scale(0.92);
 }
@@ -216,4 +223,22 @@ html {
   border-radius: 50%;
   background: var(--pink, #FF4D94);
   box-shadow: 0 0 8px var(--pink, #FF4D94);
+}
+
+@media (max-width: 600px) {
+  .back-to-top {
+    bottom: 18px;
+    right: 18px;
+    width: 42px;
+    height: 42px;
+  }
+  .toast-notice {
+    bottom: 20px;
+    max-width: calc(100vw - 32px);
+    width: auto;
+    font-size: 12px;
+    padding: 10px 16px;
+    text-align: center;
+    white-space: normal;
+  }
 }
