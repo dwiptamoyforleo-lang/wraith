@@ -375,9 +375,13 @@
 
     function saveAuthAndRedirect(userData) {
       try {
+        if (userData) {
+          if (!userData.sub && userData.id) userData.sub = userData.id;
+          if (!userData.sub && userData.email) userData.sub = 'email_' + String(userData.email).toLowerCase().trim().replace(/[^a-z0-9_.-]/gi, '_');
+        }
         localStorage.setItem('wraith_user', JSON.stringify(userData));
         sessionStorage.setItem('wraith_user', JSON.stringify(userData));
-        sessionStorage.setItem('wraith_user_name', userData.name || userData.email || '');
+        sessionStorage.setItem('wraith_user_name', (userData && (userData.name || userData.email)) || '');
         document.cookie = "wraith_auth=1; path=/; max-age=86400; SameSite=None; Secure";
       } catch(e) {}
       window.location.href = 'shop.html';
@@ -515,7 +519,7 @@
             });
           })
           .catch(function() {
-            saveAuthAndRedirect({ name: 'Member', email: 'user@google.com' });
+            saveAuthAndRedirect({ name: 'Member', email: 'user@google.com', sub: 'fallback_google_user' });
           });
         }
       }

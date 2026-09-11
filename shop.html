@@ -1833,7 +1833,10 @@
   <div class="cart-drawer-backdrop" id="cartBackdrop">
     <div class="cart-drawer" id="cartDrawer" role="dialog" aria-modal="true" aria-label="Your Bag">
       <div class="drawer-head">
-        <h3>Shopping Bag (<span id="cartItemCountHead">0</span>)</h3>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <h3>Shopping Bag (<span id="cartItemCountHead">0</span>)</h3>
+          <button class="drawer-clear-btn" id="clearBagBtn" onclick="clearCurrentBag()" style="background:none; border:none; color:var(--text-dim); font-size:11px; text-transform:uppercase; letter-spacing:0.06em; cursor:pointer; font-family:inherit; padding:4px 6px; transition:color 0.2s;" title="Clear all items from your bag" onmouseover="this.style.color='var(--pink)'" onmouseout="this.style.color='var(--text-dim)'">Clear</button>
+        </div>
         <button class="drawer-close" id="closeBagBtn" aria-label="Close Bag">&times;</button>
       </div>
 
@@ -1917,18 +1920,107 @@
       { id: 'void-carabiner', name: 'Void Carabiner Chain', price: 54, category: 'bottoms', desc: 'Cast 925 sterling silver plated industrial carabiner with heavy curb link pant chain.', img: 'https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=800&q=80', fabric: 'Cast Brass with 925 Sterling Silver Micro-Plating' }
     ];
 
-    // Local Shopping Cart State
-    let cart = [];
-    try {
-      const stored = localStorage.getItem('wraith_cart');
-      if (stored) cart = JSON.parse(stored);
-    } catch(e) { cart = []; }
+    // ==========================================
+    // Account-Specific Shopping Cart State
+    // ==========================================
 
-    function saveCart() {
+    let currentCartUserId = null;
+    let cart = [];
+
+    // Clean up obsolete un-scoped legacy cart so it never leaks between accounts
+    try {
+      localStorage.removeItem('wraith_cart');
+      sessionStorage.removeItem('wraith_cart');
+    } catch(e) {}
+
+    // Extracts authenticated Google account's stable 'sub' user ID (or permanent identifier)
+    function getAuthenticatedUserId() {
       try {
-        localStorage.setItem('wraith_cart', JSON.stringify(cart));
+        const raw = localStorage.getItem('wraith_user') || sessionStorage.getItem('wraith_user');
+        if (raw) {
+          const user = JSON.parse(raw);
+          if (user) {
+            // Google immutable account 'sub' identifier is primary
+            if (user.sub && String(user.sub).trim()) {
+              return String(user.sub).trim();
+            }
+            if (user.id && String(user.id).trim()) {
+              return String(user.id).trim();
+            }
+            if (user.email && String(user.email).trim()) {
+              return 'email_' + String(user.email).trim().toLowerCase().replace(/[^a-z0-9_.-]/gi, '_');
+            }
+          }
+        }
+        const name = sessionStorage.getItem('wraith_user_name');
+        if (name && String(name).trim()) {
+          return 'user_' + String(name).trim().toLowerCase().replace(/[^a-z0-9_.-]/gi, '_');
+        }
       } catch(e) {}
+      return null;
+    }
+
+    // Storage key strictly tied to the specific account: 'wraith_cart_<userId>'
+    function getCartStorageKey(userId) {
+      const uid = userId !== undefined ? userId : getAuthenticatedUserId();
+      if (!uid) return null;
+      return 'wraith_cart_' + uid;
+    }
+
+    // Load cart strictly for the active user; clears in-memory state if unauthenticated
+    function loadCartForCurrentUser() {
+      const activeUserId = getAuthenticatedUserId();
+
+      // Reset in-memory cart first so no previous account items linger
+      cart = [];
+      currentCartUserId = activeUserId;
+
+      if (!activeUserId) {
+        renderCartUI();
+        return;
+      }
+
+      const key = getCartStorageKey(activeUserId);
+      try {
+        const stored = localStorage.getItem(key);
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          if (Array.isArray(parsed)) {
+            cart = parsed;
+          }
+        }
+      } catch(e) {
+        cart = [];
+      }
+
       renderCartUI();
+    }
+
+    // Save cart strictly under the active user's key
+    function saveCart() {
+      const activeUserId = getAuthenticatedUserId();
+      if (!activeUserId) {
+        renderCartUI();
+        return;
+      }
+
+      currentCartUserId = activeUserId;
+      const key = getCartStorageKey(activeUserId);
+      try {
+        localStorage.setItem(key, JSON.stringify(cart));
+      } catch(e) {
+        console.warn('Unable to persist account bag:', e);
+      }
+      renderCartUI();
+    }
+
+    // Ensures the currently active user matches in-memory cart before performing any cart action
+    function ensureCartForCurrentUser() {
+      const activeUserId = getAuthenticatedUserId();
+      if (activeUserId !== currentCartUserId) {
+        loadCartForCurrentUser();
+      }
+      return activeUserId;
     }
 
     function renderCartUI() {
@@ -1992,6 +2084,7 @@
     }
 
     function updateQty(idx, change) {
+      ensureCartForCurrentUser();
       if (!cart[idx]) return;
       cart[idx].qty += change;
       if (cart[idx].qty <= 0) cart.splice(idx, 1);
@@ -1999,9 +2092,23 @@
     }
 
     function removeCartItem(idx) {
+      ensureCartForCurrentUser();
+      if (!cart[idx]) return;
       cart.splice(idx, 1);
       saveCart();
       if (window.showToast) window.showToast('Item removed from bag');
+    }
+
+    function clearCurrentBag() {
+      const activeUserId = ensureCartForCurrentUser();
+      if (!activeUserId) return;
+      if (cart.length === 0) {
+        if (window.showToast) window.showToast('Bag is already empty');
+        return;
+      }
+      cart = [];
+      saveCart();
+      if (window.showToast) window.showToast('Bag cleared');
     }
 
     function selectCardSize(btn) {
@@ -2025,6 +2132,13 @@
     }
 
     function addItemToBag(prod, size) {
+      const activeUserId = ensureCartForCurrentUser();
+      if (!activeUserId) {
+        if (window.showToast) window.showToast('Please sign in to add items to your bag');
+        window.location.replace('index.html?auth_required=1');
+        return;
+      }
+
       const existing = cart.find(item => item.id === prod.id && item.size === size);
       if (existing) {
         existing.qty += 1;
@@ -2051,6 +2165,7 @@
     const closeBagBtn = document.getElementById('closeBagBtn');
 
     function openBag() {
+      ensureCartForCurrentUser();
       if (cartBackdrop) cartBackdrop.classList.add('open');
     }
     function closeBag() {
@@ -2066,6 +2181,7 @@
     }
 
     function handleCheckout() {
+      ensureCartForCurrentUser();
       if (cart.length === 0) {
         if (window.showToast) window.showToast('Your bag is currently empty.');
         return;
@@ -2189,7 +2305,7 @@
     }
 
     // Member Authentication Details & Sign-out
-    (function() {
+    function updateUserHeaderBadge() {
       let user = null;
       try {
         const raw = localStorage.getItem('wraith_user') || sessionStorage.getItem('wraith_user');
@@ -2200,40 +2316,70 @@
         }
       } catch(e) {}
 
-      if (user) {
-        const displayName = user.name || user.email || 'Member';
-        const badge = document.getElementById('userNameBadge');
-        if (badge) badge.textContent = displayName;
-        const mobileName = document.getElementById('mobileUserName');
-        if (mobileName) mobileName.textContent = displayName;
-        const avatarMini = document.getElementById('userAvatarMini');
-        if (avatarMini) {
-          if (user.picture) {
-            avatarMini.innerHTML = '<img src="' + user.picture + '" alt="' + displayName + '" style="width:100%; height:100%; object-fit:cover; border-radius:50%;" referrerpolicy="no-referrer">';
-          } else {
-            avatarMini.textContent = displayName.charAt(0).toUpperCase();
-          }
+      const displayName = user ? (user.name || user.email || 'Member') : 'Member';
+      const badge = document.getElementById('userNameBadge');
+      if (badge) badge.textContent = displayName;
+      const mobileName = document.getElementById('mobileUserName');
+      if (mobileName) mobileName.textContent = displayName;
+      const avatarMini = document.getElementById('userAvatarMini');
+      if (avatarMini) {
+        if (user && user.picture) {
+          avatarMini.innerHTML = '<img src="' + user.picture + '" alt="' + displayName + '" style="width:100%; height:100%; object-fit:cover; border-radius:50%;" referrerpolicy="no-referrer">';
+        } else {
+          avatarMini.textContent = displayName.charAt(0).toUpperCase();
         }
       }
+    }
 
-      function doSignOut(e) {
-        if (e) e.preventDefault();
-        try {
-          localStorage.removeItem('wraith_user');
-          sessionStorage.clear();
-          document.cookie = "wraith_auth=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-        } catch(err) {}
-        window.location.replace('index.html?switch_account=1');
+    function doSignOut(e) {
+      if (e) e.preventDefault();
+      try {
+        // 1. Immediately wipe in-memory bag state and reset UI to prevent stale items from surviving
+        cart = [];
+        currentCartUserId = null;
+        renderCartUI();
+
+        // 2. Clear current session credentials without wiping other accounts' stored bags
+        localStorage.removeItem('wraith_user');
+        sessionStorage.clear();
+        document.cookie = "wraith_auth=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+      } catch(err) {}
+      window.location.replace('index.html?switch_account=1');
+    }
+
+    const sBtn = document.getElementById('shopSignOutBtn');
+    if (sBtn) sBtn.addEventListener('click', doSignOut);
+    const mBtn = document.getElementById('mobileSignOutLink');
+    if (mBtn) mBtn.addEventListener('click', doSignOut);
+
+    // Initial Account & Cart UI sync
+    updateUserHeaderBadge();
+    loadCartForCurrentUser();
+
+    // Listen for storage events (e.g. login/logout in another tab or account switch)
+    window.addEventListener('storage', function(e) {
+      if (e.key === 'wraith_user') {
+        const newUserId = getAuthenticatedUserId();
+        if (newUserId !== currentCartUserId) {
+          loadCartForCurrentUser();
+          updateUserHeaderBadge();
+        }
+      } else if (e.key && e.key.startsWith('wraith_cart_')) {
+        const activeKey = getCartStorageKey();
+        if (e.key === activeKey) {
+          loadCartForCurrentUser();
+        }
       }
+    });
 
-      const sBtn = document.getElementById('shopSignOutBtn');
-      if (sBtn) sBtn.addEventListener('click', doSignOut);
-      const mBtn = document.getElementById('mobileSignOutLink');
-      if (mBtn) mBtn.addEventListener('click', doSignOut);
-
-      // Initial Cart UI sync
-      renderCartUI();
-    })();
+    // Handle pageshow (e.g. browser back/forward cache navigation)
+    window.addEventListener('pageshow', function() {
+      const activeUserId = getAuthenticatedUserId();
+      if (activeUserId !== currentCartUserId) {
+        loadCartForCurrentUser();
+        updateUserHeaderBadge();
+      }
+    });
   </script>
   <script src="blur-reveal.js"></script>
 </body>
