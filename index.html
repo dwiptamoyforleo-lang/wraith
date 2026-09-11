@@ -384,35 +384,8 @@
       }
 
       // 2. Direct Google OAuth 2.0 authorization popup with prompt: 'select_account'
-      if (clientId) {
-        var redirectUri = window.location.origin + '/auth/callback';
-        var authParams = new URLSearchParams({
-          client_id: clientId,
-          redirect_uri: redirectUri,
-          response_type: 'token',
-          scope: 'openid email profile',
-          prompt: 'select_account',
-          nonce: Math.random().toString(36).substring(2)
-        });
-        var authUrl = 'https://accounts.google.com/o/oauth2/v2/auth?' + authParams.toString();
-        var width = 520;
-        var height = 650;
-        var left = window.screenX + (window.outerWidth - width) / 2;
-        var top = window.screenY + (window.outerHeight - height) / 2;
-        var popup = window.open(
-          authUrl,
-          'google_select_account',
-          'width=' + width + ',height=' + height + ',left=' + left + ',top=' + top + ',status=no,toolbar=no,menubar=no'
-        );
-
-        if (!popup) {
-          window.location.href = authUrl;
-        } else {
-          setTimeout(function() {
-            if (notice) notice.style.display = 'none';
-          }, 3000);
-        }
-        return;
+      if (notice) {
+  notice.textContent = 'Google Sign-In is still loading. Please try again.';
       }
 
       if (notice) {
