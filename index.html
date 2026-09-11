@@ -555,8 +555,12 @@
       signOutBtn.addEventListener('click', function() {
         try {
           localStorage.removeItem('wraith_user');
-          sessionStorage.clear();
-          document.cookie = "wraith_auth=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+sessionStorage.clear();
+document.cookie = "wraith_auth=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+
+if (window.google && google.accounts && google.accounts.id && google.accounts.id.disableAutoSelect) {
+  google.accounts.id.disableAutoSelect();
+}
         } catch(e) {}
         document.getElementById('postSignIn').style.display = 'none';
         document.getElementById('preSignIn').style.display = 'block';
