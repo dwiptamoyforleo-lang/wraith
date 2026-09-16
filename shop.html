@@ -1301,6 +1301,45 @@
     gap: 6px;
   }
 
+  /* Logout Confirmation Modal */
+  .confirm-modal-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-medium);
+    border-radius: 20px;
+    width: 100%;
+    max-width: 440px;
+    padding: 34px 28px;
+    text-align: center;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.85);
+    position: relative;
+    transform: scale(0.96);
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .modal-backdrop.open .confirm-modal-card {
+    transform: scale(1);
+  }
+  .confirm-modal-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: rgba(229, 83, 83, 0.12);
+    border: 1px solid rgba(229, 83, 83, 0.35);
+    color: #FF6B6B;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+  }
+  .confirm-modal-actions {
+    display: flex;
+    gap: 12px;
+    width: 100%;
+    margin-top: 8px;
+  }
+
   /* Responsive Rules */
   @media (max-width: 992px) {
     .hero-grid { grid-template-columns: 1fr; gap: 40px; }
@@ -1477,6 +1516,17 @@
     .drawer-footer { padding: 16px 18px; }
     .drawer-subtotal { font-size: 15px; margin-bottom: 12px; }
     .checkout-btn { padding: 13px; font-size: 13px; min-height: 48px; }
+    .confirm-modal-card {
+      padding: 26px 18px 22px;
+      border-radius: 16px;
+    }
+    .confirm-modal-actions {
+      flex-direction: column-reverse;
+      gap: 10px;
+    }
+    .confirm-modal-actions .btn {
+      width: 100%;
+    }
   }
 
   @media (max-width: 380px) {
@@ -2111,6 +2161,37 @@
     </div>
   </div>
 
+  <!-- Logout Confirmation Modal -->
+  <div class="modal-backdrop" id="logoutConfirmModal" role="dialog" aria-modal="true" aria-labelledby="logoutConfirmTitle">
+    <div class="confirm-modal-card">
+      <button type="button" class="modal-close-btn" id="closeShopLogoutModalBtn" aria-label="Close modal" style="top: 16px; right: 16px;">&times;</button>
+      <div class="confirm-modal-icon">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+          <polyline points="16 17 21 12 16 7"></polyline>
+          <line x1="21" y1="12" x2="9" y2="12"></line>
+        </svg>
+      </div>
+      <div style="font-size: 10.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #FF6B6B; margin-bottom: 8px;">
+        Atelier Session
+      </div>
+      <h3 id="logoutConfirmTitle" style="font-size: 22px; font-weight: 800; color: var(--text-pure); margin-bottom: 8px; font-family: 'Syne', sans-serif;">
+        Are you sure you want to log out?
+      </h3>
+      <p id="logoutConfirmDesc" style="color: var(--text-muted); font-size: 14px; line-height: 1.55; margin-bottom: 24px;">
+        You will need to sign in again to access your saved bag, member drops, and order history.
+      </p>
+      <div class="confirm-modal-actions">
+        <button type="button" class="btn btn-outline" id="cancelShopLogoutBtn" style="flex: 1; justify-content: center; padding: 12px 18px;">
+          Stay Signed In
+        </button>
+        <button type="button" class="btn btn-accent" id="confirmShopLogoutBtn" style="flex: 1; justify-content: center; padding: 12px 18px; background: #E55353; border-color: #E55353; color: #FFFFFF; box-shadow: 0 4px 14px rgba(229, 83, 83, 0.35);">
+          Yes, Log Out
+        </button>
+      </div>
+    </div>
+  </div>
+
   <script>
     // Product Database for quick view and cart operations
     const PRODUCTS = [
@@ -2535,8 +2616,50 @@
       }
     }
 
+    const shopLogoutModal = document.getElementById('logoutConfirmModal');
+    const cancelShopLogoutBtn = document.getElementById('cancelShopLogoutBtn');
+    const confirmShopLogoutBtn = document.getElementById('confirmShopLogoutBtn');
+    const closeShopLogoutModalBtn = document.getElementById('closeShopLogoutModalBtn');
+
+    function openShopLogoutModal(e) {
+      if (e) e.preventDefault();
+      // Close mobile drawer if open
+      const mobileNav = document.getElementById('mobileNav');
+      const menuToggle = document.getElementById('menuToggle');
+      if (mobileNav && mobileNav.classList.contains('open')) {
+        mobileNav.classList.remove('open');
+        if (menuToggle) menuToggle.setAttribute('aria-expanded', 'false');
+      }
+
+      // Update description with current user name if available
+      try {
+        const raw = localStorage.getItem('wraith_user') || sessionStorage.getItem('wraith_user');
+        if (raw) {
+          const u = JSON.parse(raw);
+          const desc = document.getElementById('logoutConfirmDesc');
+          const name = u.name || u.email || 'Member';
+          if (desc) {
+            desc.textContent = 'Signed in as ' + name + '. Are you sure you want to log out of your atelier account?';
+          }
+        }
+      } catch(err) {}
+
+      if (shopLogoutModal) {
+        shopLogoutModal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function closeShopLogoutModal() {
+      if (shopLogoutModal) {
+        shopLogoutModal.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    }
+
     function doSignOut(e) {
       if (e) e.preventDefault();
+      closeShopLogoutModal();
       try {
         // 1. Immediately wipe in-memory bag state and reset UI to prevent stale items from surviving
         cart = [];
@@ -2552,9 +2675,27 @@
     }
 
     const sBtn = document.getElementById('shopSignOutBtn');
-    if (sBtn) sBtn.addEventListener('click', doSignOut);
+    if (sBtn) sBtn.addEventListener('click', openShopLogoutModal);
     const mBtn = document.getElementById('mobileSignOutLink');
-    if (mBtn) mBtn.addEventListener('click', doSignOut);
+    if (mBtn) mBtn.addEventListener('click', openShopLogoutModal);
+
+    if (cancelShopLogoutBtn) cancelShopLogoutBtn.addEventListener('click', closeShopLogoutModal);
+    if (closeShopLogoutModalBtn) closeShopLogoutModalBtn.addEventListener('click', closeShopLogoutModal);
+    if (confirmShopLogoutBtn) confirmShopLogoutBtn.addEventListener('click', doSignOut);
+
+    if (shopLogoutModal) {
+      shopLogoutModal.addEventListener('click', function(e) {
+        if (e.target === shopLogoutModal) {
+          closeShopLogoutModal();
+        }
+      });
+    }
+
+    window.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && shopLogoutModal && shopLogoutModal.classList.contains('open')) {
+        closeShopLogoutModal();
+      }
+    });
 
     // Initial Account & Cart UI sync
     updateUserHeaderBadge();
