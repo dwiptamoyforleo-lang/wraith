@@ -113,9 +113,18 @@
   h1, h2, h3, .display-font {
     font-family: 'Syne', sans-serif;
     font-weight: 800;
-    letter-spacing: -0.02em;
-    line-height: 1.05;
+    letter-spacing: -0.01em;
+    line-height: 1.16;
     text-transform: uppercase;
+    transform: scaleY(1.12);
+    transform-origin: left center;
+  }
+
+  b, strong {
+    font-weight: 700;
+    display: inline-block;
+    transform: scaleY(1.14);
+    transform-origin: bottom center;
   }
 
   a { color: inherit; text-decoration: none; }
@@ -202,6 +211,9 @@
     font-weight: 800;
     letter-spacing: 0.06em;
     color: var(--text-pure);
+    display: inline-block;
+    transform: scaleY(1.15);
+    transform-origin: left bottom;
   }
   .brand-badge {
     font-size: 10px;
@@ -722,11 +734,17 @@
     font-size: 17px;
     font-weight: 700;
     color: var(--text-pure);
+    display: inline-block;
+    transform: scaleY(1.1);
+    transform-origin: left bottom;
   }
   .product-price {
     font-size: 16px;
     font-weight: 700;
     color: var(--accent);
+    display: inline-block;
+    transform: scaleY(1.1);
+    transform-origin: right bottom;
   }
   .product-desc {
     font-size: 13px;
@@ -992,6 +1010,9 @@
     color: var(--text-pure);
     margin-bottom: 18px;
     text-transform: uppercase;
+    display: inline-block;
+    transform: scaleY(1.14);
+    transform-origin: left bottom;
   }
   .footer-col ul {
     list-style: none;
@@ -1294,11 +1315,19 @@
     background: var(--bg-card);
     border-radius: 10px;
     border: 1px solid var(--border-subtle);
-    font-size: 12px;
+    font-size: 13px;
     color: var(--text-muted);
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 8px;
+  }
+  .modal-specs-list strong {
+    color: var(--text-pure);
+    font-size: 13.5px;
+    letter-spacing: 0.02em;
+    display: inline-block;
+    transform: scaleY(1.14);
+    transform-origin: left bottom;
   }
 
   /* Logout Confirmation Modal */
@@ -1687,7 +1716,7 @@
           <button class="filter-btn" data-filter="outerwear">Outerwear (2)</button>
           <button class="filter-btn" data-filter="tops">Tops (2)</button>
           <button class="filter-btn" data-filter="bottoms">Bottoms (2)</button>
-          <button class="filter-btn" data-filter="accessories">Hardware (2)</button>
+          <button class="filter-btn" data-filter="accessories">Headwear (2)</button>
         </div>
       </div>
 
@@ -1919,7 +1948,7 @@
             </div>
           </div>
           <div class="product-body">
-            <span class="product-category-tag">Hardware & Jewelry</span>
+            <span class="product-category-tag">Headwear & Jewelry</span>
             <div class="product-title-row">
               <h3 class="product-title">Void Carabiner Chain</h3>
               <span class="product-price">$54</span>
@@ -2044,7 +2073,7 @@
             <li><a href="#shop">Chapter 03: Hollow</a></li>
             <li><a href="#shop">Heavyweight Outerwear</a></li>
             <li><a href="#shop">Tops & Knitwear</a></li>
-            <li><a href="#shop">Hardware Artifacts</a></li>
+            <li><a href="#shop">Headwear Artifacts</a></li>
           </ul>
         </div>
 
@@ -2140,7 +2169,7 @@
 
           <div class="modal-specs-list">
             <div><strong>Fabric:</strong> <span id="modalFabric">480 GSM Loopback French Terry</span></div>
-            <div><strong>Hardware:</strong> Oxidized matte black brass</div>
+            <div><strong>Headwear:</strong> Oxidized matte black brass</div>
             <div><strong>Origin:</strong> Cut & sewn in Porto, Portugal</div>
             <div><strong>Care:</strong> Machine wash cold inside-out, hang dry</div>
           </div>

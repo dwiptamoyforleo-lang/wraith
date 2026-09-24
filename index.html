@@ -175,6 +175,9 @@
     font-weight: 800;
     letter-spacing: 0.06em;
     color: var(--text-pure);
+    display: inline-block;
+    transform: scaleY(1.15);
+    transform-origin: left bottom;
   }
   .brand-badge {
     font-size: 10px;
@@ -191,15 +194,25 @@
     font-family: 'Syne', sans-serif;
     font-weight: 800;
     font-size: clamp(32px, 5vw, 42px);
-    line-height: 1.05;
+    line-height: 1.16;
     color: var(--text-pure);
     text-transform: uppercase;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.01em;
     margin-bottom: 10px;
+    display: inline-block;
+    transform: scaleY(1.12);
+    transform-origin: center bottom;
   }
   h1.auth-heading em {
     font-style: normal;
     color: var(--accent);
+  }
+
+  b, strong {
+    font-weight: 700;
+    display: inline-block;
+    transform: scaleY(1.14);
+    transform-origin: bottom center;
   }
 
   .auth-sub {
@@ -552,7 +565,7 @@
       <div style="font-size: 10.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #FF6B6B; margin-bottom: 8px;">
         Atelier Session
       </div>
-      <h3 id="indexLogoutTitle" style="font-size: 22px; font-weight: 800; color: var(--text-pure); margin-bottom: 8px; font-family: 'Syne', sans-serif;">
+      <h3 id="indexLogoutTitle" style="font-size: 22px; font-weight: 800; color: var(--text-pure); margin-bottom: 8px; font-family: 'Syne', sans-serif; display: inline-block; transform: scaleY(1.12); transform-origin: center bottom;">
         Are you sure you want to log out?
       </h3>
       <p style="color: var(--text-muted); font-size: 13.5px; line-height: 1.55; margin-bottom: 22px;">

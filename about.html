@@ -96,9 +96,18 @@
   h1, h2, h3, .display-font {
     font-family: 'Syne', sans-serif;
     font-weight: 800;
-    letter-spacing: -0.02em;
-    line-height: 1.05;
+    letter-spacing: -0.01em;
+    line-height: 1.16;
     text-transform: uppercase;
+    transform: scaleY(1.12);
+    transform-origin: left center;
+  }
+
+  b, strong {
+    font-weight: 700;
+    display: inline-block;
+    transform: scaleY(1.14);
+    transform-origin: bottom center;
   }
 
   a { color: inherit; text-decoration: none; }
@@ -124,6 +133,9 @@
     font-weight: 800;
     letter-spacing: 0.06em;
     color: var(--text-pure);
+    display: inline-block;
+    transform: scaleY(1.15);
+    transform-origin: left bottom;
   }
   .back-btn {
     font-size: 12px;

@@ -9,13 +9,33 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = 3000;
 
+function getGoogleClientId() {
+  let clientId = (process.env.GOOGLE_CLIENT_ID || '').trim();
+  if (!clientId || clientId.includes('YOUR_GOOGLE_CLIENT_ID')) {
+    try {
+      const candidates = ['.env', '.env.local', '.env.example'];
+      for (const f of candidates) {
+        const p = path.join(__dirname, f);
+        if (fs.existsSync(p)) {
+          const content = fs.readFileSync(p, 'utf8');
+          const m = content.match(/^GOOGLE_CLIENT_ID=(.+)$/m);
+          if (m && m[1] && m[1].trim() && !m[1].includes('YOUR_GOOGLE_CLIENT_ID')) {
+            clientId = m[1].trim();
+            break;
+          }
+        }
+      }
+    } catch (e) {}
+  }
+  return clientId && !clientId.includes('YOUR_GOOGLE_CLIENT_ID') ? clientId : '';
+}
+
 // Dynamic handler for index.html to inject GOOGLE_CLIENT_ID if configured in environment
 app.get(['/', '/index.html'], (req, res) => {
   try {
     let html = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8');
-    const clientId = (process.env.GOOGLE_CLIENT_ID || '').trim();
-    const isReal = clientId && !clientId.includes('YOUR_GOOGLE_CLIENT_ID');
-    html = html.replace('__GOOGLE_CLIENT_ID__', isReal ? clientId : '');
+    const clientId = getGoogleClientId();
+    html = html.replace('__GOOGLE_CLIENT_ID__', clientId);
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
     res.send(html);
   } catch (err) {
@@ -97,10 +117,10 @@ app.get(['/auth/callback', '/auth/callback/'], (req, res) => {
 
 // API endpoint returning configured Google Client ID
 app.get('/api/auth/google-config', (req, res) => {
-  const clientId = (process.env.GOOGLE_CLIENT_ID || '').trim();
+  const clientId = getGoogleClientId();
   res.json({
     clientId: clientId,
-    configured: Boolean(clientId && !clientId.includes('YOUR_GOOGLE_CLIENT_ID'))
+    configured: Boolean(clientId)
   });
 });
 
